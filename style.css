@@ -103,7 +103,7 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
   margin-top: 56px;
   padding-top: 22px;
   border-top: 1px solid var(--line);
-  text-align: center;
+  text-align: left;
   color: var(--muted);
   font-size: 0.8rem;
   line-height: 1.6;
@@ -114,6 +114,9 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 .main-footer strong {
   font-weight: 700;
   color: var(--ink);
+}
+.main-footer em {
+  font-style: italic;
 }
 @media (max-width: 600px) {
   .main-footer {
@@ -463,5 +466,21 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 .tier-badge.t1 { background: var(--ink); color: #f59e0b; }
 .tier-badge.t2 { background: var(--soft); color: var(--ink); }
 .tier-badge.t3 { background: #e8f1ea; color: #46745c; }
-.cover-frame { max-width: 260px; width: 100%; justify-self: center; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.25); border-radius: 8px; overflow: hidden; }
+.cover-frame { max-width: 260px; width: 100%; justify-self: center; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.25); border-radius: 8px; overflow: hidden; background: #0b1329; }
 .cover-svg { width: 100%; height: auto; display: block; }
+
+/* Interactive cover generator for Lesson 5 */
+.cover-sync-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 20px; margin: 18px 0 24px; }
+.cover-sync-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+.cover-sync-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); }
+.badge-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; box-shadow: 0 0 6px rgba(16, 185, 129, 0.6); }
+.cover-sync-details { font-size: 1.05rem; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--ink); margin-bottom: 6px; }
+.cover-sync-details strong { font-size: 1.15rem; color: var(--ink); }
+.sync-font { font-weight: 700; color: var(--accent); }
+.sync-genre { font-size: 0.88rem; color: var(--muted); font-weight: 500; }
+.sync-sep { color: var(--line); }
+.cover-sync-tags { font-size: 0.82rem; color: var(--muted); line-height: 1.4; }
+.cover-controls-row { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--line); }
+.cover-controls-row .ctrl { margin-bottom: 12px; }
+.cover-genre-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin: 8px 0 8px; display: block; }
+

@@ -13,6 +13,460 @@ const fontByName = (n) => (n === FLEX.n ? FLEX : FONT_LIST.find((f) => f.n === n
 const stackOf = (n) => fontStack(fontByName(n));
 let demoTitle = "Moon Harbor";
 
+const matchmakerState = {
+  picked: new Set(),
+  topFont: null,
+  genre: "action",
+};
+
+function escapeXml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+function getRankedFonts(picked) {
+  return FONT_LIST.map((f) => {
+    const traits = Object.values(f.t).filter((p) => picked.has("p:" + p));
+    const styles = f.s.filter((s) => picked.has("s:" + s));
+    return { f, traits, styles, score: traits.length + styles.length * 1.5 };
+  }).filter((r) => r.score > 0).sort((a, b) => b.score - a.score || a.f.n.localeCompare(b.f.n));
+}
+
+function detectGenre(picked, topFont) {
+  if (picked.has("s:futuristic") || picked.has("s:scientific")) return "scifi";
+  if (picked.has("s:medieval")) return "medieval";
+  if (picked.has("s:childish") || picked.has("s:funny")) return "childish";
+  if (picked.has("s:rustic")) return "rustic";
+  if (picked.has("s:natural") || picked.has("s:fresh")) return "natural";
+  if (picked.has("s:artdeco") || picked.has("s:smart")) return "artdeco";
+  if (picked.has("s:brutalist")) return "action";
+
+  if (picked.has("p:cold") && (picked.has("p:hard") || picked.has("p:fast"))) return "scifi";
+  if (picked.has("p:threatening") || (picked.has("p:old") && picked.has("p:hard"))) return "medieval";
+  if (picked.has("p:friendly") && (picked.has("p:soft") || picked.has("p:young"))) return "childish";
+  if (picked.has("p:delicate") || picked.has("p:feminine")) return "artdeco";
+  if (picked.has("p:strong") || picked.has("p:fast") || picked.has("p:masculine")) return "action";
+
+  if (topFont) {
+    const s = topFont.s || [];
+    const main = topFont.main;
+    if (main === "futuristic" || main === "scientific" || s.includes("futuristic") || s.includes("scientific")) return "scifi";
+    if (main === "medieval" || s.includes("medieval")) return "medieval";
+    if (main === "childish" || main === "funny" || s.includes("childish") || s.includes("funny")) return "childish";
+    if (main === "rustic" || s.includes("rustic")) return "rustic";
+    if (main === "natural" || main === "fresh" || s.includes("natural") || s.includes("fresh")) return "natural";
+    if (main === "artdeco" || main === "smart" || s.includes("artdeco") || s.includes("smart")) return "artdeco";
+    if (main === "brutalist" || s.includes("brutalist")) return "action";
+  }
+  return "action";
+}
+
+const GENRES = {
+  action: {
+    en: "Superhero / Action Noir",
+    id: "Pahlawan Super / Aksi Noir",
+    heroDesc: { en: "the cloaked vigilante", id: "tokoh pahlawan bertopeng" },
+    tagline: { en: "THE CITY NEVER SLEEPS", id: "KOTA TAK PERNAH TIDUR" },
+    byline: "STORY: R. CHEN · ART: M. SOTO",
+    issue: { tag: "OCT", price: "$3.99" },
+    defaultFont: "Anton",
+    presetTraits: ["strong", "hard"],
+    presetStyles: ["brutalist"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="actionSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#0b1329"/>
+          <stop offset="50%" stop-color="#16203a"/>
+          <stop offset="100%" stop-color="#24314e"/>
+        </linearGradient>
+        <filter id="actionTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.8"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#actionSky)"/>
+      <circle cx="180" cy="75" r="26" fill="#fde68a" opacity="0.9"/>
+      <polygon points="30,330 90,50 115,50 45,330" fill="#ffffff" opacity="0.06"/>
+      <rect x="12" y="150" width="36" height="180" fill="#070c18"/>
+      <rect x="52" y="180" width="38" height="150" fill="#050810"/>
+      <rect x="150" y="130" width="42" height="200" fill="#070c18"/>
+      <rect x="195" y="165" width="35" height="165" fill="#050810"/>
+      <circle cx="22" cy="170" r="1.5" fill="#fef08a" opacity="0.7"/>
+      <circle cx="32" cy="190" r="1.5" fill="#fef08a" opacity="0.7"/>
+      <circle cx="162" cy="150" r="1.5" fill="#fef08a" opacity="0.7"/>
+      <circle cx="172" cy="170" r="1.5" fill="#fef08a" opacity="0.7"/>
+      <text x="120" y="78" fill="#f59e0b" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#actionTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 65,330 L 95,245 L 145,245 L 175,330 Z" fill="#030712"/>
+      <path d="M 120,195 C 90,205 65,235 45,280 C 70,265 100,255 115,248 Z" fill="#0c1322"/>
+      <path d="M 120,195 C 150,205 180,235 205,280 C 175,265 145,255 125,248 Z" fill="#0c1322"/>
+      <path d="M 105,198 C 105,168 112,150 120,144 C 128,150 135,168 135,198 Z" fill="#1e293b"/>
+      <polygon points="112,152 116,132 120,145 124,132 128,152" fill="#0c1322"/>
+      <ellipse cx="120" cy="148" rx="9" ry="11" fill="#0c1322"/>
+      <ellipse cx="117" cy="146" rx="2" ry="1" fill="#38bdf8"/>
+      <ellipse cx="123" cy="146" rx="2" ry="1" fill="#38bdf8"/>
+      <text x="120" y="104" fill="#cbd5e1" font-family="'Figtree',sans-serif" font-size="7.5" font-weight="600" text-anchor="middle" letter-spacing="1.8">${escapeXml(bi(L, "THE CITY NEVER SLEEPS", "KOTA TAK PERNAH TIDUR"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="3" fill="#090d16" stroke="#f59e0b" stroke-width="1.2"/>
+        <text x="16" y="13" fill="#f59e0b" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#f59e0b" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#f8fafc" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">OCT</text>
+        <text x="16" y="32.5" fill="#94a3b8" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$3.99</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#030712" opacity="0.9"/>
+      <text x="120" y="322" fill="#94a3b8" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">STORY: R. CHEN · ART: M. SOTO</text>
+    `
+  },
+  scifi: {
+    en: "Sci-Fi / Space Odyssey",
+    id: "Fiksi Ilmiah / Luar Angkasa",
+    heroDesc: { en: "the cyber astronaut", id: "penjelajah siber luar angkasa" },
+    tagline: { en: "BEYOND THE KNOWN STARS", id: "MENEMBUS BATAS BINTANG" },
+    byline: "STORY: A. VANCE · ART: K. TURING",
+    issue: { tag: "VOL 1", price: "$4.99" },
+    defaultFont: "Orbitron",
+    presetTraits: ["cold", "hard"],
+    presetStyles: ["futuristic"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="scifiSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#030712"/>
+          <stop offset="40%" stop-color="#0f172a"/>
+          <stop offset="75%" stop-color="#1e1b4b"/>
+          <stop offset="100%" stop-color="#312e81"/>
+        </linearGradient>
+        <filter id="scifiTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#06b6d4" flood-opacity="0.6"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#scifiSky)"/>
+      <g fill="#ffffff" opacity="0.85">
+        <circle cx="25" cy="35" r="1"/>
+        <circle cx="70" cy="20" r="1.2"/>
+        <circle cx="110" cy="40" r="0.8"/>
+        <circle cx="150" cy="25" r="1"/>
+        <circle cx="215" cy="45" r="1.3"/>
+        <circle cx="45" cy="95" r="0.8"/>
+        <circle cx="225" cy="115" r="1"/>
+        <circle cx="85" cy="130" r="0.9"/>
+      </g>
+      <circle cx="185" cy="72" r="25" fill="#0284c7" opacity="0.85"/>
+      <ellipse cx="185" cy="72" rx="44" ry="9" fill="none" stroke="#67e8f9" stroke-width="2.5" opacity="0.8" transform="rotate(-25 185 72)"/>
+      <path d="M 0,265 L 240,265 M 0,285 L 240,285 M 0,305 L 240,305 M 120,245 L 15,330 M 120,245 L 75,330 M 120,245 L 165,330 M 120,245 L 225,330" stroke="#06b6d4" stroke-width="0.8" opacity="0.3"/>
+      <polygon points="15,330 25,160 38,160 48,330" fill="#090e1a"/>
+      <polygon points="195,330 205,145 218,145 228,330" fill="#090e1a"/>
+      <circle cx="31" cy="165" r="1.5" fill="#06b6d4"/>
+      <circle cx="211" cy="150" r="1.5" fill="#06b6d4"/>
+      <text x="120" y="78" fill="#38bdf8" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#scifiTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 55,330 L 85,240 L 155,240 L 185,330 Z" fill="#050a14"/>
+      <path d="M 85,240 L 120,210 L 155,240 L 140,285 L 100,285 Z" fill="#0f172a"/>
+      <circle cx="120" cy="165" r="22" fill="#050a14"/>
+      <rect x="104" y="152" width="32" height="18" rx="7" fill="#06b6d4"/>
+      <rect x="108" y="155" width="16" height="4" rx="2" fill="#ffffff" opacity="0.8"/>
+      <line x1="94" y1="170" x2="94" y2="135" stroke="#38bdf8" stroke-width="1.5"/>
+      <circle cx="94" cy="133" r="2.5" fill="#06b6d4"/>
+      <text x="120" y="104" fill="#a5f3fc" font-family="'Figtree',sans-serif" font-size="7.5" font-weight="600" text-anchor="middle" letter-spacing="1.8">${escapeXml(bi(L, "BEYOND THE KNOWN STARS", "MENEMBUS BATAS BINTANG"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="3" fill="#040812" stroke="#06b6d4" stroke-width="1.2"/>
+        <text x="16" y="13" fill="#38bdf8" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#e0f2fe" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">VOL 1</text>
+        <text x="16" y="32.5" fill="#38bdf8" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$4.99</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#040812" opacity="0.95"/>
+      <text x="120" y="322" fill="#7dd3fc" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">STORY: A. VANCE · ART: K. TURING</text>
+    `
+  },
+  medieval: {
+    en: "Dark Fantasy / Gothic",
+    id: "Fantasi Gelap / Gotik",
+    heroDesc: { en: "the hooded dark knight", id: "ksatria kegelapan bertudung" },
+    tagline: { en: "THE ANCIENT CURSE AWAKENS", id: "KUTUKAN KUNO KEMBALI BANGKIT" },
+    byline: "STORY: G. M. ROWEN · ART: L. D’ANGELO",
+    issue: { tag: "TOME I", price: "$3.99" },
+    defaultFont: "Pirata One",
+    presetTraits: ["old", "threatening"],
+    presetStyles: ["medieval"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="medievalSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#180509"/>
+          <stop offset="45%" stop-color="#2c0b16"/>
+          <stop offset="100%" stop-color="#450a1a"/>
+        </linearGradient>
+        <filter id="medievalTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.9"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#medievalSky)"/>
+      <circle cx="180" cy="74" r="26" fill="#ef4444" opacity="0.85"/>
+      <path d="M 60,45 Q 65,40 70,45 Q 75,40 80,45 Q 70,52 60,45 Z" fill="#090204"/>
+      <path d="M 85,35 Q 89,31 93,35 Q 97,31 101,35 Q 93,40 85,35 Z" fill="#090204"/>
+      <path d="M 45,60 Q 48,56 52,60 Q 56,56 59,60 Q 52,65 45,60 Z" fill="#090204"/>
+      <polygon points="0,240 45,155 75,210 135,135 185,195 240,145 240,330 0,330" fill="#0d0306"/>
+      <polygon points="40,158 45,115 50,158" fill="#0d0306"/>
+      <polygon points="130,138 135,95 140,138" fill="#0d0306"/>
+      <text x="120" y="78" fill="#fbbf24" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#medievalTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 40,330 C 50,230 80,185 120,175 C 160,185 190,230 200,330 Z" fill="#080204"/>
+      <path d="M 104,185 C 104,142 112,126 120,120 C 128,126 136,142 136,185 Z" fill="#140508"/>
+      <ellipse cx="120" cy="155" rx="8" ry="11" fill="#080204"/>
+      <circle cx="117" cy="153" r="1.5" fill="#f87171"/>
+      <circle cx="123" cy="153" r="1.5" fill="#f87171"/>
+      <rect x="118.5" y="105" width="3" height="75" fill="#cbd5e1"/>
+      <polygon points="120,95 117,106 123,106" fill="#f8fafc"/>
+      <rect x="110" y="145" width="20" height="4" rx="1.5" fill="#fbbf24"/>
+      <circle cx="120" cy="183" r="3" fill="#fbbf24"/>
+      <text x="120" y="104" fill="#fecaca" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1.5">${escapeXml(bi(L, "THE ANCIENT CURSE AWAKENS", "KUTUKAN KUNO KEMBALI BANGKIT"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="3" fill="#120407" stroke="#fbbf24" stroke-width="1.2"/>
+        <text x="16" y="13" fill="#fbbf24" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#fbbf24" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#fca5a5" font-family="'Figtree',sans-serif" font-size="6" font-weight="700" text-anchor="middle">TOME I</text>
+        <text x="16" y="32.5" fill="#fbbf24" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$3.99</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#080204" opacity="0.95"/>
+      <text x="120" y="322" fill="#fca5a5" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">STORY: G. M. ROWEN · ART: L. D’ANGELO</text>
+    `
+  },
+  childish: {
+    en: "Cartoon / Playful Comedy",
+    id: "Kartun / Komedi Ceria",
+    heroDesc: { en: "the joyful cartoon buddy", id: "tokoh kartun ceria" },
+    tagline: { en: "A SILLY & BUBBLY ESCAPADE", id: "PETUALANGAN CERIA & GOKIL" },
+    byline: "STORY: T. PIPPIN · ART: B. TOODLES",
+    issue: { tag: "FUN!", price: "$2.99" },
+    defaultFont: "Fredoka",
+    presetTraits: ["friendly", "soft"],
+    presetStyles: ["childish"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="childishSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#38bdf8"/>
+          <stop offset="50%" stop-color="#7dd3fc"/>
+          <stop offset="100%" stop-color="#fef08a"/>
+        </linearGradient>
+        <filter id="childishTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="3" stdDeviation="2" flood-color="#ffffff" flood-opacity="0.9"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#childishSky)"/>
+      <circle cx="185" cy="70" r="24" fill="#fde047" stroke="#fbbf24" stroke-width="2"/>
+      <line x1="185" y1="40" x2="185" y2="34" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+      <line x1="215" y1="70" x2="221" y2="70" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+      <line x1="206" y1="49" x2="211" y2="44" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="178" cy="67" r="2" fill="#78350f"/>
+      <circle cx="192" cy="67" r="2" fill="#78350f"/>
+      <path d="M 180,75 Q 185,80 190,75" stroke="#78350f" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <g fill="#ffffff" opacity="0.95">
+        <circle cx="45" cy="60" r="16"/>
+        <circle cx="62" cy="55" r="20"/>
+        <circle cx="80" cy="60" r="15"/>
+      </g>
+      <path d="M 0,225 Q 70,185 140,215 T 240,195 L 240,330 L 0,330 Z" fill="#10b981"/>
+      <path d="M 0,250 Q 80,220 160,255 T 240,240 L 240,330 L 0,330 Z" fill="#059669"/>
+      <text x="120" y="78" fill="#e11d48" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#childishTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <ellipse cx="120" cy="225" rx="30" ry="36" fill="#f97316"/>
+      <ellipse cx="120" cy="228" rx="20" ry="24" fill="#fef08a"/>
+      <path d="M 94,215 Q 75,190 70,165" stroke="#f97316" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M 146,215 Q 165,190 170,165" stroke="#f97316" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <circle cx="120" cy="170" r="24" fill="#f97316"/>
+      <path d="M 102,158 C 85,135 80,160 96,174 Z" fill="#c2410c"/>
+      <path d="M 138,158 C 155,135 160,160 144,174 Z" fill="#c2410c"/>
+      <ellipse cx="113" cy="166" rx="3" ry="4" fill="#1e293b"/>
+      <ellipse cx="127" cy="166" rx="3" ry="4" fill="#1e293b"/>
+      <circle cx="114" cy="165" r="1.2" fill="#ffffff"/>
+      <circle cx="128" cy="165" r="1.2" fill="#ffffff"/>
+      <ellipse cx="120" cy="173" rx="3" ry="2" fill="#78350f"/>
+      <path d="M 115,178 Q 120,184 125,178" stroke="#78350f" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <text x="120" y="104" fill="#0f172a" font-family="'Figtree',sans-serif" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="1.5">${escapeXml(bi(L, "A SILLY & BUBBLY ESCAPADE", "PETUALANGAN CERIA & GOKIL"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="5" fill="#fef08a" stroke="#e11d48" stroke-width="1.5"/>
+        <text x="16" y="13" fill="#e11d48" font-family="'Figtree',sans-serif" font-size="10" font-weight="900" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#e11d48" stroke-width="1"/>
+        <text x="16" y="25" fill="#e11d48" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="800" text-anchor="middle">FUN!</text>
+        <text x="16" y="32.5" fill="#c2410c" font-family="'Figtree',sans-serif" font-size="5.5" font-weight="700" text-anchor="middle">$2.99</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#065f46" opacity="0.95"/>
+      <text x="120" y="322" fill="#d1fae5" font-family="'Figtree',sans-serif" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="1">${byline}</text>
+    `
+  },
+  rustic: {
+    en: "Wild West / Desert Outlaw",
+    id: "Wild West / Penjahat Gurun",
+    heroDesc: { en: "the lone desert gunslinger", id: "koboi penembak legendaris" },
+    tagline: { en: "HIGH NOON AT DUST CREEK", id: "TENGAH HARI DI LEMBAH DEBU" },
+    byline: "STORY: J. DAKOTA · ART: C. HAWKINS",
+    issue: { tag: "WILD", price: "$3.99" },
+    defaultFont: "Rye",
+    presetTraits: ["old", "strong"],
+    presetStyles: ["rustic"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="rusticSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#451a03"/>
+          <stop offset="35%" stop-color="#9a3412"/>
+          <stop offset="70%" stop-color="#ea580c"/>
+          <stop offset="100%" stop-color="#fde047"/>
+        </linearGradient>
+        <filter id="rusticTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#451a03" flood-opacity="0.9"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#rusticSky)"/>
+      <circle cx="120" cy="180" r="38" fill="#fef08a" opacity="0.95"/>
+      <path d="M 50,45 Q 55,40 60,45 Q 65,40 70,45" stroke="#291203" stroke-width="1.8" fill="none"/>
+      <path d="M 180,38 Q 184,34 188,38 Q 192,34 196,38" stroke="#291203" stroke-width="1.5" fill="none"/>
+      <polygon points="0,230 40,205 90,205 110,235 155,200 205,200 240,230 240,330 0,330" fill="#291203"/>
+      <g fill="#1a0c02">
+        <rect x="25" y="190" width="6" height="50" rx="2"/>
+        <path d="M 17,210 L 25,210 L 25,215 L 17,215 L 17,200 L 21,200 L 21,210 Z"/>
+        <path d="M 31,218 L 38,218 L 38,206 L 34,206 L 34,214 L 31,214 Z"/>
+        <rect x="205" y="175" width="6" height="65" rx="2"/>
+        <path d="M 197,195 L 205,195 L 205,200 L 197,200 L 197,185 L 201,185 L 201,195 Z"/>
+      </g>
+      <text x="120" y="78" fill="#fef3c7" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#rusticTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 60,330 L 85,250 L 155,250 L 180,330 Z" fill="#140802"/>
+      <path d="M 85,250 C 70,210 80,185 120,180 C 160,185 170,210 155,250 Z" fill="#210e04"/>
+      <ellipse cx="120" cy="162" rx="38" ry="7" fill="#140802"/>
+      <path d="M 104,162 C 104,142 110,135 120,133 C 130,135 136,142 136,162 Z" fill="#261005"/>
+      <rect x="105" y="159" width="30" height="3" fill="#ea580c"/>
+      <text x="120" y="104" fill="#fed7aa" font-family="'Figtree',sans-serif" font-size="7.5" font-weight="700" text-anchor="middle" letter-spacing="1.8">${escapeXml(bi(L, "HIGH NOON AT DUST CREEK", "TENGAH HARI DI LEMBAH DEBU"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="2" fill="#291203" stroke="#f59e0b" stroke-width="1.2"/>
+        <text x="16" y="13" fill="#fef3c7" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#f59e0b" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#fde047" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">WILD</text>
+        <text x="16" y="32.5" fill="#fed7aa" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$3.99</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#140802" opacity="0.95"/>
+      <text x="120" y="322" fill="#fed7aa" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">${byline}</text>
+    `
+  },
+  natural: {
+    en: "Nature / Forest Adventure",
+    id: "Alam / Petualangan Hutan",
+    heroDesc: { en: "the mountain trail wanderer", id: "penjelajah bukit dan rimba" },
+    tagline: { en: "WHERE THE WILD BREEZE CALLS", id: "KEMANA ANGIN LIAR MEMANGGIL" },
+    byline: "STORY: M. WILLOW · ART: S. GREEN",
+    issue: { tag: "VOL 1", price: "$3.50" },
+    defaultFont: "Amatic SC",
+    presetTraits: ["delicate", "friendly"],
+    presetStyles: ["natural"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="naturalSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#022c22"/>
+          <stop offset="40%" stop-color="#064e3b"/>
+          <stop offset="75%" stop-color="#047857"/>
+          <stop offset="100%" stop-color="#6ee7b7"/>
+        </linearGradient>
+        <filter id="naturalTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#022c22" flood-opacity="0.9"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#naturalSky)"/>
+      <path d="M 190,55 A 18 18 0 1 0 190,85 A 14 14 0 1 1 190,55 Z" fill="#fef9c3" opacity="0.9"/>
+      <circle cx="45" cy="115" r="2" fill="#fef08a" opacity="0.9"/>
+      <circle cx="85" cy="140" r="1.5" fill="#fef08a" opacity="0.8"/>
+      <circle cx="210" cy="120" r="2.2" fill="#fef08a" opacity="0.9"/>
+      <circle cx="165" cy="155" r="1.8" fill="#fef08a" opacity="0.7"/>
+      <polygon points="0,260 20,210 40,260 60,200 80,260 110,190 140,260 170,205 200,260 220,215 240,260 240,330 0,330" fill="#043c2e"/>
+      <polygon points="0,280 35,235 70,280 115,225 160,280 205,240 240,280 240,330 0,330" fill="#02241b"/>
+      <text x="120" y="78" fill="#ecfdf5" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#naturalTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 50,330 L 95,235 L 145,235 L 190,330 Z" fill="#011812"/>
+      <circle cx="120" cy="155" r="13" fill="#011812"/>
+      <path d="M 125,152 Q 142,156 138,168" stroke="#011812" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M 108,168 L 132,168 L 138,235 L 102,235 Z" fill="#011812"/>
+      <rect x="98" y="172" width="10" height="24" rx="4" fill="#011812"/>
+      <line x1="145" y1="110" x2="140" y2="280" stroke="#a7f3d0" stroke-width="2" stroke-linecap="round"/>
+      <text x="120" y="104" fill="#a7f3d0" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1.5">${escapeXml(bi(L, "WHERE THE WILD BREEZE CALLS", "KEMANA ANGIN LIAR MEMANGGIL"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="4" fill="#022c22" stroke="#34d399" stroke-width="1.2"/>
+        <text x="16" y="13" fill="#6ee7b7" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#34d399" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#ecfdf5" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">VOL 1</text>
+        <text x="16" y="32.5" fill="#34d399" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$3.50</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#011812" opacity="0.95"/>
+      <text x="120" y="322" fill="#6ee7b7" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">${byline}</text>
+    `
+  },
+  artdeco: {
+    en: "Noir Glamour / 1920s Mystery",
+    id: "Noir Glamor / Misteri Era 1920",
+    heroDesc: { en: "the elegant fedora detective", id: "detektif elegan bertopi fedora" },
+    tagline: { en: "SECRETS IN THE VELVET SHADOWS", id: "RAHASIA DI BALIK KELAM MALAM" },
+    byline: "STORY: V. STERLING · ART: E. DELACROIX",
+    issue: { tag: "OCT", price: "$4.50" },
+    defaultFont: "Poiret One",
+    presetTraits: ["delicate", "smart"],
+    presetStyles: ["artdeco"],
+    renderSvg: (L, cleanTitle, font, fontSize, letterSpacing, byline) => `
+      <defs>
+        <linearGradient id="artdecoSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#09090b"/>
+          <stop offset="45%" stop-color="#1e1b4b"/>
+          <stop offset="100%" stop-color="#312e81"/>
+        </linearGradient>
+        <filter id="artdecoTitleShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.9"/>
+        </filter>
+      </defs>
+      <rect width="240" height="330" rx="8" fill="url(#artdecoSky)"/>
+      <g stroke="#fbbf24" stroke-width="0.8" opacity="0.25">
+        <line x1="120" y1="190" x2="0" y2="20"/>
+        <line x1="120" y1="190" x2="40" y2="0"/>
+        <line x1="120" y1="190" x2="80" y2="0"/>
+        <line x1="120" y1="190" x2="120" y2="0"/>
+        <line x1="120" y1="190" x2="160" y2="0"/>
+        <line x1="120" y1="190" x2="200" y2="0"/>
+        <line x1="120" y1="190" x2="240" y2="20"/>
+        <circle cx="120" cy="190" r="110" fill="none"/>
+        <circle cx="120" cy="190" r="70" fill="none"/>
+      </g>
+      <polygon points="10,330 10,210 25,210 25,180 40,180 40,330" fill="#08080f"/>
+      <polygon points="200,330 200,180 215,180 215,210 230,210 230,330" fill="#08080f"/>
+      <line x1="25" y1="190" x2="25" y2="330" stroke="#fbbf24" stroke-width="0.8" opacity="0.4"/>
+      <line x1="215" y1="190" x2="215" y2="330" stroke="#fbbf24" stroke-width="0.8" opacity="0.4"/>
+      <text x="120" y="78" fill="#fef08a" font-family="${fontStack(font)}" font-size="${fontSize}" font-weight="900" text-anchor="middle" letter-spacing="${letterSpacing}" filter="url(#artdecoTitleShadow)">${escapeXml(cleanTitle)}</text>
+      <path d="M 65,330 L 95,245 L 145,245 L 175,330 Z" fill="#06060c"/>
+      <polygon points="120,200 98,180 106,230 120,220 134,230 142,180" fill="#131326"/>
+      <circle cx="120" cy="165" r="14" fill="#06060c"/>
+      <ellipse cx="120" cy="156" rx="28" ry="6" fill="#06060c" transform="rotate(-5 120 156)"/>
+      <path d="M 106,155 C 106,140 112,132 120,132 C 128,132 134,140 134,155 Z" fill="#181830"/>
+      <circle cx="127" cy="172" r="1.5" fill="#f97316"/>
+      <path d="M 128,172 Q 134,150 128,130 T 136,105" stroke="#e2e8f0" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+      <text x="120" y="104" fill="#fef9c3" font-family="'Figtree',sans-serif" font-size="6.8" font-weight="600" text-anchor="middle" letter-spacing="1.5">${escapeXml(bi(L, "SECRETS IN THE VELVET SHADOWS", "RAHASIA DI BALIK KELAM MALAM"))}</text>
+      <g transform="translate(10, 10)">
+        <rect width="32" height="36" rx="1" fill="#09090b" stroke="#fbbf24" stroke-width="1.2"/>
+        <rect x="2" y="2" width="28" height="32" fill="none" stroke="#fbbf24" stroke-width="0.5"/>
+        <text x="16" y="13" fill="#fef08a" font-family="'Figtree',sans-serif" font-size="10" font-weight="800" text-anchor="middle">#1</text>
+        <line x1="5" y1="16.5" x2="27" y2="16.5" stroke="#fbbf24" stroke-width="0.8"/>
+        <text x="16" y="25" fill="#fef08a" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">OCT</text>
+        <text x="16" y="32.5" fill="#cbd5e1" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$4.50</text>
+      </g>
+      <rect x="0" y="308" width="240" height="22" fill="#06060c" opacity="0.95"/>
+      <text x="120" y="322" fill="#fef08a" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">${byline}</text>
+    `
+  }
+};
+
+function generateCoverSvg(L, title, font, genre) {
+  const g = GENRES[genre] || GENRES.action;
+  const f = font || fontByName(g.defaultFont);
+  const cleanTitle = (title || "MOON HARBOR").trim().toUpperCase() || "MOON HARBOR";
+  const len = cleanTitle.length;
+  const fontSize = len <= 7 ? 32 : len <= 10 ? 27 : len <= 14 ? 22 : len <= 18 ? 18 : len <= 22 ? 15 : 13;
+  const letterSpacing = len <= 8 ? "1.5" : len <= 14 ? "0.8" : "0.3";
+
+  return `<svg viewBox="0 0 240 330" class="cover-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Interactive Comic Cover Mockup">
+    ${g.renderSvg(L, cleanTitle, f, fontSize, letterSpacing, g.byline)}
+  </svg>`;
+}
+
+
 /** Tiny DOM builder: h("div", {class:"x"}, child, "text", ...) */
 function h(tag, attrs, ...kids) {
   const e = document.createElement(tag);
@@ -168,20 +622,19 @@ function lessonRoles(L) {
 /* ================= Lesson 4 ================= */
 function lessonMatch(L) {
   const traitKeys = Object.keys(TRAITS), styleKeys = Object.keys(STYLES);
-  const picked = new Set();
   const results = h("div", { class: "fgrid" });
   const hint = h("p", { class: "hint" });
   const sampleEls = [];
   const render = () => {
     results.innerHTML = ""; sampleEls.length = 0;
-    const ranked = FONT_LIST.map((f) => {
-      const traits = Object.values(f.t).filter((p) => picked.has("p:" + p));
-      const styles = f.s.filter((s) => picked.has("s:" + s));
-      return { f, traits, styles, score: traits.length + styles.length * 1.5 };
-    }).filter((r) => r.score > 0).sort((a, b) => b.score - a.score || a.f.n.localeCompare(b.f.n)).slice(0, 4);
-    hint.textContent = picked.size === 0
+    const rankedAll = getRankedFonts(matchmakerState.picked);
+    const ranked = rankedAll.slice(0, 4);
+    matchmakerState.topFont = ranked.length ? ranked[0].f : null;
+    matchmakerState.genre = detectGenre(matchmakerState.picked, matchmakerState.topFont);
+
+    hint.textContent = matchmakerState.picked.size === 0
       ? bi(L, "Pick two to four words above to see fonts that carry them.", "Pilih dua sampai empat kata di atas untuk melihat font yang membawanya.")
-      : ranked.length ? bi(L, "Fonts that match most of your words:", "Font yang cocok dengan sebagian besar katamu:")
+      : ranked.length ? bi(L, "Fonts that match most of your words (these will generate your cover in Lesson 5!):", "Font yang cocok dengan sebagian besar katamu (ini akan membuat sampulmu di Pelajaran 5!):")
         : bi(L, "No font in our small library matches. Try fewer or different words.", "Tidak ada font di perpustakaan kecil kami yang cocok. Coba kata lain atau lebih sedikit.");
     ranked.forEach(({ f, traits, styles }) => {
       const s = h("span", { class: "sample", style: `font-family:${fontStack(f)}` }, demoTitle);
@@ -191,10 +644,11 @@ function lessonMatch(L) {
     });
   };
   const chip = (key, text) => {
-    const b = h("button", { type: "button", class: "chip-toggle", "aria-pressed": "false" }, text);
+    const isPressed = matchmakerState.picked.has(key);
+    const b = h("button", { type: "button", class: "chip-toggle", "aria-pressed": String(isPressed) }, text);
     b.addEventListener("click", () => {
-      if (picked.has(key)) picked.delete(key); else picked.add(key);
-      b.setAttribute("aria-pressed", String(picked.has(key)));
+      if (matchmakerState.picked.has(key)) matchmakerState.picked.delete(key); else matchmakerState.picked.add(key);
+      b.setAttribute("aria-pressed", String(matchmakerState.picked.has(key)));
       render();
     });
     return b;
@@ -319,87 +773,115 @@ function lessonMatch(L) {
 
 /* ================= Lesson 5 ================= */
 function lessonHabits(L) {
-  const coverSvg = `<svg viewBox="0 0 240 330" class="cover-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Comic Cover Mockup">
-    <defs>
-      <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0b1329"/>
-        <stop offset="50%" stop-color="#16203a"/>
-        <stop offset="100%" stop-color="#24314e"/>
-      </linearGradient>
-      <filter id="titleShadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.8"/>
-      </filter>
-    </defs>
-    <!-- Background -->
-    <rect width="240" height="330" rx="8" fill="url(#nightSky)"/>
-    
-    <!-- Moon & atmosphere -->
-    <circle cx="180" cy="75" r="26" fill="#fde68a" opacity="0.9"/>
-    <polygon points="30,330 90,50 115,50 45,330" fill="#ffffff" opacity="0.06"/>
-    
-    <!-- City silhouettes -->
-    <rect x="12" y="150" width="36" height="180" fill="#070c18"/>
-    <rect x="52" y="180" width="38" height="150" fill="#050810"/>
-    <rect x="150" y="130" width="42" height="200" fill="#070c18"/>
-    <rect x="195" y="165" width="35" height="165" fill="#050810"/>
-    <circle cx="22" cy="170" r="1.5" fill="#fef08a" opacity="0.7"/>
-    <circle cx="32" cy="190" r="1.5" fill="#fef08a" opacity="0.7"/>
-    <circle cx="162" cy="150" r="1.5" fill="#fef08a" opacity="0.7"/>
-    <circle cx="172" cy="170" r="1.5" fill="#fef08a" opacity="0.7"/>
+  const getCoverParams = () => {
+    const ranked = getRankedFonts(matchmakerState.picked);
+    const font = matchmakerState.topFont || (ranked.length ? ranked[0].f : fontByName("Anton"));
+    const genre = matchmakerState.genre || detectGenre(matchmakerState.picked, font);
+    return { title: demoTitle || "MOON HARBOR", font, genre };
+  };
 
-    <!-- [1] TITLE LOGO (Midground) -->
-    <text x="120" y="78" fill="#f59e0b" font-family="'Anton', sans-serif" font-size="34" font-weight="900" text-anchor="middle" letter-spacing="1" filter="url(#titleShadow)">NIGHT HAWK</text>
+  const coverContainer = h("div", { class: "cover-frame" });
+  const statusNote = h("div", { class: "cover-sync-box" });
+  const t1Note = h("p", null);
+  const t2Note = h("p", null);
+  const t3Note = h("p", null);
 
-    <!-- [1] HERO ILLUSTRATION (Foreground Layer overlapping title letters for 3D depth) -->
-    <path d="M 65,330 L 95,245 L 145,245 L 175,330 Z" fill="#030712"/>
-    <path d="M 120,195 C 90,205 65,235 45,280 C 70,265 100,255 115,248 Z" fill="#0c1322"/>
-    <path d="M 120,195 C 150,205 180,235 205,280 C 175,265 145,255 125,248 Z" fill="#0c1322"/>
-    <path d="M 105,198 C 105,168 112,150 120,144 C 128,150 135,168 135,198 Z" fill="#1e293b"/>
-    <polygon points="112,152 116,132 120,145 124,132 128,152" fill="#0c1322"/>
-    <ellipse cx="120" cy="148" rx="9" ry="11" fill="#0c1322"/>
-    <ellipse cx="117" cy="146" rx="2" ry="1" fill="#38bdf8"/>
-    <ellipse cx="123" cy="146" rx="2" ry="1" fill="#38bdf8"/>
+  const updateCover = () => {
+    const { title, font, genre } = getCoverParams();
+    const gInfo = GENRES[genre] || GENRES.action;
+    coverContainer.innerHTML = generateCoverSvg(L, title, font, genre);
 
-    <!-- [2] SECONDARY: TAGLINE in negative space -->
-    <text x="120" y="104" fill="#cbd5e1" font-family="'Figtree',sans-serif" font-size="8" font-weight="600" text-anchor="middle" letter-spacing="2">THE CITY NEVER SLEEPS</text>
+    // Update status bar
+    const pickedLabels = [];
+    matchmakerState.picked.forEach((k) => {
+      if (k.startsWith("p:") && TRAITS[k.slice(2)]) pickedLabels.push(TRAITS[k.slice(2)][L].label);
+      if (k.startsWith("s:") && STYLES[k.slice(2)]) pickedLabels.push(STYLES[k.slice(2)][L].label);
+    });
+    const tagSummary = pickedLabels.length
+      ? pickedLabels.join(" · ")
+      : bi(L, "Default: Strong · Brutalist", "Default: Kuat · Brutalis");
 
-    <!-- [3] TERTIARY: CORNER ISSUE BOX -->
-    <g transform="translate(10, 10)">
-      <rect width="32" height="36" rx="3" fill="#090d16" stroke="#f59e0b" stroke-width="1.2"/>
-      <text x="16" y="13" fill="#f59e0b" font-family="'Anton',sans-serif" font-size="10" font-weight="700" text-anchor="middle">#1</text>
-      <line x1="4" y1="16.5" x2="28" y2="16.5" stroke="#f59e0b" stroke-width="0.8"/>
-      <text x="16" y="25" fill="#f8fafc" font-family="'Figtree',sans-serif" font-size="6.5" font-weight="700" text-anchor="middle">OCT</text>
-      <text x="16" y="32.5" fill="#94a3b8" font-family="'Figtree',sans-serif" font-size="5.5" text-anchor="middle">$3.99</text>
-    </g>
+    statusNote.innerHTML = `
+      <div class="cover-sync-header">
+        <div class="cover-sync-badge">
+          <span class="badge-dot"></span>
+          <span>${bi(L, "Live Cover Generated from Lesson 4 Matchmaker", "Sampul Interaktif dari Pencocok Font Pelajaran 4")}</span>
+        </div>
+      </div>
+      <div class="cover-sync-details">
+        <strong>${escapeXml(title)}</strong>
+        <span class="sync-sep">·</span>
+        <span class="sync-font" style="font-family:${fontStack(font)}">${font.n}</span>
+        <span class="sync-sep">·</span>
+        <span class="sync-genre">${gInfo[L]}</span>
+      </div>
+      <div class="cover-sync-tags"><strong>${bi(L, "Tags applied: ", "Tag aktif: ")}</strong>${escapeXml(tagSummary)}</div>
+    `;
 
-    <!-- [3] TERTIARY: CREATOR BYLINE (Bottom margin) -->
-    <rect x="0" y="308" width="240" height="22" fill="#030712" opacity="0.9"/>
-    <text x="120" y="322" fill="#94a3b8" font-family="'Figtree',sans-serif" font-size="7" font-weight="600" text-anchor="middle" letter-spacing="1">STORY: R. CHEN · ART: M. SOTO</text>
-  </svg>`;
+    // Dynamic 3-tier cards
+    t1Note.textContent = bi(
+      L,
+      `The illustration is the emotional hook (${gInfo.heroDesc[L]}). The title "${title}" in ${font.n} is the story's brand identity. Notice how the hero's silhouette overlaps slightly in front of the lower title letters, creating exciting 3D depth while keeping at least 80% of the letters clearly legible.`,
+      `Ilustrasi adalah penarik emosi (${gInfo.heroDesc[L]}). Judul "${title}" dalam font ${font.n} adalah identitas merek cerita. Perhatikan bagaimana siluet tokoh menumpuk sedikit di depan huruf-huruf judul bagian bawah, menciptakan kedalaman 3D yang seru sambil menjaga huruf tetap terbaca.`
+    );
+    t2Note.textContent = bi(
+      L,
+      `A teaser phrase ("${gInfo.tagline[L]}"). Scaled to 25–35% of title size and placed in calm negative space between the title and art without crowding either.`,
+      `Kalimat pemikat ("${gInfo.tagline[L]}"). Dibuat berukuran 25–35% dari ukuran judul dan ditaruh di ruang kosong yang tenang antara judul dan gambar tanpa membuatnya sesak.`
+    );
+    t3Note.textContent = bi(
+      L,
+      `Issue #1, price (${gInfo.issue.price}) and date (${gInfo.issue.tag}) belong in a compact Corner Box for collector reference. Creator names (${gInfo.byline}) rest in quiet margins. Never place metadata over the hero's face or focal action!`,
+      `Nomor edisi (#1), harga (${gInfo.issue.price}), dan tanggal (${gInfo.issue.tag}) disimpan di Kotak Sudut yang rapi untuk rujukan kolektor. Nama kreator (${gInfo.byline}) ditaruh di tepi yang tenang. Jangan pernah menaruh teks di atas wajah atau aksi utama tokoh!`
+    );
+  };
+
+  // Genre preset buttons so users can also switch themes directly on this page
+  const genreButtonsContainer = h("div", { class: "chipset" });
+  Object.entries(GENRES).forEach(([gKey, gVal]) => {
+    const btn = h("button", {
+      type: "button",
+      class: "chip-toggle",
+      "aria-pressed": String(matchmakerState.genre === gKey),
+      onclick: () => {
+        matchmakerState.picked.clear();
+        gVal.presetTraits.forEach((t) => matchmakerState.picked.add("p:" + t));
+        gVal.presetStyles.forEach((s) => matchmakerState.picked.add("s:" + s));
+        matchmakerState.topFont = fontByName(gVal.defaultFont);
+        matchmakerState.genre = gKey;
+        genreButtonsContainer.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        updateCover();
+      }
+    }, gVal[L]);
+    genreButtonsContainer.append(btn);
+  });
+
+  updateCover();
 
   return h("div", null,
     h("h3", null, bi(L, "Cover Hierarchy with Main Illustration", "Hierarki Sampul dengan Ilustrasi Utama")),
     para(bi(L,
-      "In comic cover design, you almost never layout text on an empty canvas: you are orchestrating a relationship with a centerpiece cover illustration. A successful cover establishes a clear 3-tier hierarchy between the art, the title logo, and the supporting metadata:",
-      "Dalam desain sampul komik, kamu hampir tidak pernah menata teks di kanvas kosong: kamu mengatur hubungan dengan ilustrasi sampul utama. Sampul yang berhasil membangun hierarki 3 tingkat yang jelas antara gambar, logo judul, dan informasi pendukung:")),
+      "In comic cover design, you almost never layout text on an empty canvas: you are orchestrating a relationship with a centerpiece cover illustration. Below is a live interactive cover generated from your Lesson 4 matchmaker choices:",
+      "Dalam desain sampul komik, kamu hampir tidak pernah menata teks di kanvas kosong: kamu mengatur hubungan dengan ilustrasi sampul utama. Di bawah ini adalah sampul interaktif langsung yang dihasilkan dari pilihan pencocok font Pelajaran 4:")),
+    statusNote,
+    h("div", { class: "cover-controls-row" },
+      titleInput(L, () => updateCover()),
+      h("span", { class: "cover-genre-label" }, bi(L, "Quick Genre Presets:", "Preset Genre Cepat:")),
+      genreButtonsContainer
+    ),
     h("div", { class: "split cover-layout-split" },
       h("div", null,
         h("div", { class: "tier-card" },
           h("span", { class: "tier-badge t1" }, bi(L, "Tier 1: Illustration & Title Logo", "Tingkat 1: Ilustrasi & Logo Judul")),
-          para(bi(L,
-            "The illustration is the emotional hook (the hero's expression and dynamic pose). The title is the story's brand identity. Place the title in the top third ('masthead zone') so it stays visible on comic racks. Overlapping the character slightly in front of the title creates exciting 3D depth—just make sure at least 80% of the letters remain instantly legible.",
-            "Ilustrasi adalah penarik emosi (ekspresi tokoh dan pose dinamis). Judul adalah identitas merek cerita. Tempatkan judul di sepertiga atas ('zona masthead') agar tetap terlihat di rak komik. Menumpuk tokoh sedikit di depan judul menciptakan kedalaman 3D yang seru—pastikan setidaknya 80% huruf tetap terbaca jelas."))),
+          t1Note),
         h("div", { class: "tier-card" },
           h("span", { class: "tier-badge t2" }, bi(L, "Tier 2: Storyline Tagline", "Tingkat 2: Tagline Cerita")),
-          para(bi(L,
-            "A teaser phrase ('The city never sleeps'). Scale it to 25–35% of title size and place it in calm negative space between the title and art without crowding either.",
-            "Kalimat pemikat ('Kota yang tak pernah tidur'). Buat ukurannya 25–35% dari ukuran judul dan taruh di ruang kosong antara judul dan gambar tanpa membuatnya sesak."))),
+          t2Note),
         h("div", { class: "tier-card" },
           h("span", { class: "tier-badge t3" }, bi(L, "Tier 3: Issue Number & Creator Byline", "Tingkat 3: Nomor Edisi & Nama Kreator")),
-          para(bi(L,
-            "Issue #, price and date belong in a compact 'Corner Box' (usually top-left) for collector reference. Creator names (writer & artist) belong in quiet margins at 15–20% of title size. Never place metadata over the hero's face, hands, or focal action!",
-            "Nomor edisi, harga, dan tanggal disimpan di 'Kotak Sudut' yang rapi (biasanya kiri atas) untuk rujukan kolektor. Nama kreator (penulis & komikus) ditaruh di tepi yang tenang dengan ukuran 15–20% dari judul. Jangan pernah menaruh teks di atas wajah, tangan, atau aksi utama tokoh!")))),
-      raw(coverSvg, "cover-frame")),
+          t3Note)),
+      coverContainer),
     h("h3", null, bi(L, "Good habits for comic covers", "Kebiasaan baik sampul komik")),
     bullets([
       bi(L, "The Squint Test: Step back and squint. The illustration and title should be the only two dominant shapes. If an issue number or creator name screams louder, shrink it.", "Uji Sipit: Mundur dan sipitkan mata. Ilustrasi dan judul harus jadi dua bentuk paling dominan. Jika nomor edisi atau nama kreator lebih mencolok, perkecil ukurannya."),

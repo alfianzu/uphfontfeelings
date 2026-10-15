@@ -84,7 +84,7 @@ const T = {
     ],
   },
   id: {
-    appName: "Rasa Huruf",
+    appName: "Font Feelings",
     startTitle: "Setiap font punya kepribadian.",
     startLead: "Memilih font judul untuk komikmu dimulai dari memahami bahwa setiap font punya karakter. Pertama pelajaran singkat, lalu kuis 15 soal. Kamu akan belajar bagaimana karakter, ketebalan, jarak, dan sudut font membentuk rasa judulmu. Tidak perlu pengalaman desain.",
     nameLabel: "Namamu",
@@ -139,8 +139,8 @@ const T = {
       { min: 5, title: "Pemanasan", msg: "Awal yang baik. Lain kali, perhatikan seberapa bulat atau tajam hurufnya." },
       { min: 0, title: "Baru Mulai", msg: "Semua orang mulai dari sini. Main lagi dan lihat bagaimana bentuk mengubah rasa." },
     ],
-    mailSubject: (s) => `Hasil Rasa Huruf-ku: ${s} poin`,
-    mailIntro: (n) => `Hai ${n}, ini hasil Rasa Huruf-mu.`,
+    mailSubject: (s) => `Hasil Font Feelings-ku: ${s} poin`,
+    mailIntro: (n) => `Hai ${n}, ini hasil Font Feelings-mu.`,
     mailScore: "Skor", mailCorrect: "Benar", mailRank: "Peringkat", mailAnswers: "Jawabanmu", mailRemember: "Yang perlu diingat",
     mailTakeaways: [
       "Font berbicara sebelum kata-katanya: kita merasakan suasananya sebelum membaca.",
