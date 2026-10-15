@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Font Feelings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Figtree:wght@400;500;600;700&family=Pirata+One&family=Uncial+Antiqua&family=Poiret+One&family=Limelight&family=Rubik+Mono+One&family=Archivo+Black&family=Anton&family=Black+Ops+One&family=Racing+Sans+One&family=Amatic+SC:wght@400;700&family=Caveat&family=Rye&family=Special+Elite&family=Lato&family=Nunito&family=Open+Sans&family=Inter&family=Arimo&family=Fredoka&family=Chewy&family=Bangers&family=Orbitron&family=Audiowide&family=Libre+Baskerville&family=Playfair+Display&family=Cormorant+Garamond&family=Great+Vibes&family=IBM+Plex+Mono&family=Space+Mono&family=Montserrat&family=Poppins&family=Quicksand&display=swap" rel="stylesheet" />
+  <!-- Variable font used for the weight / width / spacing / slant demos (separate request so it can never break the others) -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wdth,wght@8..144,-10..0,25..151,100..1000&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <div class="brand"><span class="dot" aria-hidden="true"></span><span data-i18n="appName">Font Feelings</span></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+      <button class="lang-btn" data-lang="id" aria-pressed="false">ID</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- START -->
+    <section id="screen-start" class="screen active">
+      <div class="hero" aria-hidden="true">
+        <span style="font-family:'Anton',sans-serif">Strong</span>
+        <span style="font-family:'Cormorant Garamond',serif">Gentle</span>
+        <span style="font-family:'Fredoka',sans-serif">Playful</span>
+        <span style="font-family:'Orbitron',sans-serif">Futuristic</span>
+        <span style="font-family:'Pirata One',fantasy">Medieval</span>
+      </div>
+      <h1 data-i18n="startTitle">Every font has a personality.</h1>
+      <p class="lead" data-i18n="startLead"></p>
+
+      <form id="start-form" class="panel" novalidate>
+        <label for="name-input" data-i18n="nameLabel">Your name</label>
+        <input id="name-input" type="text" maxlength="20" autocomplete="nickname" />
+        <p id="name-error" class="error" hidden></p>
+        <button type="submit" id="btn-start" class="btn primary" data-i18n="start">Start the lessons</button>
+        <p class="hint" data-i18n="noTimer"></p>
+      </form>
+
+      <div class="links">
+        <button type="button" id="btn-skip-start" class="link" hidden data-i18n="skipLessons">Skip the lessons, go to the quiz</button>
+        <button type="button" id="btn-board-start" class="link" data-i18n="leaderboard">Leaderboard</button>
+        <span id="best-start" class="hint"></span>
+      </div>
+    </section>
+
+    <!-- LESSONS -->
+    <section id="screen-learn" class="screen">
+      <div class="hud">
+        <div class="hud-row">
+          <span id="l-count" class="hud-count"></span>
+          <button type="button" id="btn-skip" class="link"></button>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="l-progress"></div></div>
+      </div>
+      <article class="lesson">
+        <h2 id="l-title"></h2>
+        <div id="l-body"></div>
+      </article>
+      <div class="row between">
+        <button type="button" id="btn-l-back" class="btn"></button>
+        <button type="button" id="btn-l-next" class="btn primary"></button>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="screen-quiz" class="screen">
+      <div class="hud">
+        <div class="hud-row">
+          <span id="q-count" class="hud-count"></span>
+          <span class="hud-stats"><span id="hud-streak"></span><strong id="hud-score">0</strong> <span data-i18n="pts">pts</span></span>
+        </div>
+        <div class="progress" aria-hidden="true"><div id="bar-progress"></div></div>
+      </div>
+
+      <div class="qcard">
+        <p class="kicker" id="q-kicker"></p>
+        <h2 id="q-prompt"></h2>
+        <div id="q-specimen" class="specimen" hidden></div>
+        <div id="q-options" class="options"></div>
+
+        <div id="notes" class="notes" hidden aria-live="polite">
+          <p id="n-verdict" class="verdict"></p>
+          <p id="n-answer" class="answer"></p>
+          <p id="n-why" class="why"></p>
+          <p class="cues"><span class="cues-label" data-i18n="lookFor">Look for</span> <span id="n-cues"></span></p>
+          <div id="n-profile" class="profile" hidden>
+            <p class="small-label" id="n-profile-title"></p>
+            <div id="n-chips" class="chips"></div>
+          </div>
+          <p class="tip"><span class="small-label" data-i18n="goodToKnow">Good to know</span><span id="n-tip"></span></p>
+          <button id="btn-next" type="button" class="btn primary" data-i18n="next">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section id="screen-result" class="screen">
+      <p class="kicker" id="res-hello"></p>
+      <h2 id="res-rank" class="rank"></h2>
+      <div class="big-score"><span id="res-score">0</span><small data-i18n="points">points</small></div>
+      <div class="stats">
+        <div><strong id="res-correct">0</strong><small data-i18n="correct">Correct</small></div>
+        <div><strong id="res-acc">0%</strong><small data-i18n="accuracy">Accuracy</small></div>
+        <div><strong id="res-streak">0</strong><small data-i18n="bestStreak">Best streak</small></div>
+      </div>
+      <p id="res-msg" class="lead"></p>
+      <p id="res-place" class="place"></p>
+
+      <details class="review">
+        <summary data-i18n="review">Review your answers</summary>
+        <ol id="review-list"></ol>
+      </details>
+
+      <div class="panel" id="email-panel">
+        <label for="email-input" data-i18n="emailLabel">Send my results to my email</label>
+        <div class="inline">
+          <input id="email-input" type="email" inputmode="email" autocomplete="email" />
+          <button type="button" id="btn-email" class="btn primary" data-i18n="emailBtn">Send</button>
+        </div>
+        <p id="email-status" class="hint" role="status"></p>
+        <button type="button" id="btn-copy" class="link" data-i18n="copyBtn">Copy results instead</button>
+      </div>
+
+      <div class="row">
+        <button type="button" id="btn-again" class="btn primary" data-i18n="playAgain">Play again</button>
+        <button type="button" id="btn-review-lessons" class="btn" data-i18n="reviewLessons">Review the lessons</button>
+        <button type="button" id="btn-board-result" class="btn" data-i18n="leaderboard">Leaderboard</button>
+        <button type="button" id="btn-celebrate" class="btn ghost" data-i18n="celebrate">Celebrate again</button>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section id="screen-board" class="screen">
+      <h2 data-i18n="boardTitle">Leaderboard</h2>
+      <p class="hint" data-i18n="boardNote"></p>
+      <ol id="board-list" class="board"></ol>
+      <p id="board-empty" class="hint" hidden data-i18n="boardEmpty"></p>
+      <div class="row">
+        <button type="button" id="btn-board-back" class="btn primary" data-i18n="back">Back</button>
+        <button type="button" id="btn-board-clear" class="link danger" data-i18n="clear">Clear leaderboard</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="content.js"></script>
+  <script src="lessons.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
