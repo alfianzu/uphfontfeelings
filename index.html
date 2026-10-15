@@ -25,29 +25,40 @@
   <main>
     <!-- START -->
     <section id="screen-start" class="screen active">
-      <div class="hero" aria-hidden="true">
-        <span style="font-family:'Anton',sans-serif">Strong</span>
-        <span style="font-family:'Cormorant Garamond',serif">Gentle</span>
-        <span style="font-family:'Fredoka',sans-serif">Playful</span>
-        <span style="font-family:'Orbitron',sans-serif">Futuristic</span>
-        <span style="font-family:'Pirata One',fantasy">Medieval</span>
-      </div>
-      <h1 data-i18n="startTitle">Every font has a personality.</h1>
-      <p class="lead" data-i18n="startLead"></p>
+      <div class="start-grid">
+        <div class="start-hero-col">
+          <div class="hero" aria-hidden="true">
+            <span style="font-family:'Anton',sans-serif">Strong</span>
+            <span style="font-family:'Cormorant Garamond',serif">Gentle</span>
+            <span style="font-family:'Fredoka',sans-serif">Playful</span>
+            <span style="font-family:'Orbitron',sans-serif">Futuristic</span>
+            <span style="font-family:'Pirata One',fantasy">Medieval</span>
+          </div>
+          <h1 data-i18n="startTitle">Every font has a personality.</h1>
+          <p class="lead" data-i18n="startLead"></p>
+        </div>
 
-      <form id="start-form" class="panel" novalidate>
-        <label for="name-input" data-i18n="nameLabel">Your name</label>
-        <input id="name-input" type="text" maxlength="20" autocomplete="nickname" />
-        <p id="name-error" class="error" hidden></p>
-        <button type="submit" id="btn-start" class="btn primary" data-i18n="start">Start the lessons</button>
-        <p class="hint" data-i18n="noTimer"></p>
-      </form>
+        <div class="start-action-col">
+          <form id="start-form" class="panel" novalidate>
+            <label for="name-input" data-i18n="nameLabel">Your name</label>
+            <input id="name-input" type="text" maxlength="20" autocomplete="nickname" />
+            <p id="name-error" class="error" hidden></p>
+            <button type="submit" id="btn-start" class="btn primary" data-i18n="start">Start the lessons</button>
+            <p class="hint" data-i18n="noTimer"></p>
+          </form>
 
-      <div class="links">
-        <button type="button" id="btn-skip-start" class="link" hidden data-i18n="skipLessons">Skip the lessons, go to the quiz</button>
-        <button type="button" id="btn-board-start" class="link" data-i18n="leaderboard">Leaderboard</button>
-        <span id="best-start" class="hint"></span>
+          <div class="links">
+            <button type="button" id="btn-skip-start" class="link" hidden data-i18n="skipLessons">Skip the lessons, go to the quiz</button>
+            <button type="button" id="btn-board-start" class="link" data-i18n="leaderboard">Leaderboard</button>
+            <span id="best-start" class="hint"></span>
+          </div>
+        </div>
       </div>
+
+      <footer class="main-footer">
+        <p><strong>Created by Alfiansyah Zulkarnain &amp; Rie Naftali Sebastian</strong></p>
+        <p>Visual Communication Design Department - Universitas Pelita Harapan - October 2026</p>
+      </footer>
     </section>
 
     <!-- LESSONS -->
@@ -102,31 +113,38 @@
 
     <!-- RESULT -->
     <section id="screen-result" class="screen">
-      <p class="kicker" id="res-hello"></p>
-      <h2 id="res-rank" class="rank"></h2>
-      <div class="big-score"><span id="res-score">0</span><small data-i18n="points">points</small></div>
-      <div class="stats">
-        <div><strong id="res-correct">0</strong><small data-i18n="correct">Correct</small></div>
-        <div><strong id="res-acc">0%</strong><small data-i18n="accuracy">Accuracy</small></div>
-        <div><strong id="res-streak">0</strong><small data-i18n="bestStreak">Best streak</small></div>
+      <div class="result-grid">
+        <div class="result-hero-col">
+          <p class="kicker" id="res-hello"></p>
+          <h2 id="res-rank" class="rank"></h2>
+          <div class="big-score"><span id="res-score">0</span><small data-i18n="points">points</small></div>
+          <p id="res-msg" class="lead"></p>
+          <p id="res-place" class="place"></p>
+        </div>
+
+        <div class="result-side-col">
+          <div class="stats">
+            <div><strong id="res-correct">0</strong><small data-i18n="correct">Correct</small></div>
+            <div><strong id="res-acc">0%</strong><small data-i18n="accuracy">Accuracy</small></div>
+            <div><strong id="res-streak">0</strong><small data-i18n="bestStreak">Best streak</small></div>
+          </div>
+
+          <div class="panel" id="email-panel">
+            <label for="email-input" data-i18n="emailLabel">Send my results to my email</label>
+            <div class="inline">
+              <input id="email-input" type="email" inputmode="email" autocomplete="email" />
+              <button type="button" id="btn-email" class="btn primary" data-i18n="emailBtn">Send</button>
+            </div>
+            <p id="email-status" class="hint" role="status"></p>
+            <button type="button" id="btn-copy" class="link" data-i18n="copyBtn">Copy results instead</button>
+          </div>
+        </div>
       </div>
-      <p id="res-msg" class="lead"></p>
-      <p id="res-place" class="place"></p>
 
       <details class="review">
         <summary data-i18n="review">Review your answers</summary>
         <ol id="review-list"></ol>
       </details>
-
-      <div class="panel" id="email-panel">
-        <label for="email-input" data-i18n="emailLabel">Send my results to my email</label>
-        <div class="inline">
-          <input id="email-input" type="email" inputmode="email" autocomplete="email" />
-          <button type="button" id="btn-email" class="btn primary" data-i18n="emailBtn">Send</button>
-        </div>
-        <p id="email-status" class="hint" role="status"></p>
-        <button type="button" id="btn-copy" class="link" data-i18n="copyBtn">Copy results instead</button>
-      </div>
 
       <div class="row">
         <button type="button" id="btn-again" class="btn primary" data-i18n="playAgain">Play again</button>

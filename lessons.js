@@ -161,7 +161,7 @@ function lessonRoles(L) {
       bi(L, "A tall x-height: lowercase letters that are big compared with capitals.", "x-height tinggi: huruf kecil yang besar dibandingkan huruf kapital."),
     ]),
     h("h3", null, bi(L, "The thumbnail test", "Uji thumbnail")),
-    h("div", { class: "demo" }, s.row, h("div", { class: "demo-stage" }, h("div", null, a), h("div", null, b)), cap),
+    h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, h("div", null, a), h("div", null, b)), h("div", { class: "demo-ctrls" }, s.row, cap)),
   );
 }
 
@@ -437,7 +437,7 @@ function lessonWeightWidth(L) {
       "The same font can change character when you change its weight (how thick the strokes are) and its width (how wide the letters are). Many font families come with several weights and widths, such as thin, regular, bold, condensed and extended.",
       "Font yang sama bisa berubah karakter ketika ketebalan (seberapa tebal goresan) dan lebarnya (seberapa lebar huruf) diubah. Banyak keluarga font punya beberapa ketebalan dan lebar, seperti tipis, normal, tebal, condensed, dan extended.")),
     titleInput(L, (v) => (sample.textContent = v)),
-    h("div", { class: "demo" }, h("div", { class: "demo-stage" }, sample), sw.row, cap1, sd.row, cap2),
+    h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, sample), h("div", { class: "demo-ctrls" }, sw.row, cap1, sd.row, cap2)),
     bullets([
       bi(L, "Match weight to your hero's energy: a gentle character rarely wants an extra-heavy title.", "Sesuaikan ketebalan dengan energi tokohmu: tokoh lembut jarang cocok dengan judul sangat tebal."),
       bi(L, "Thin titles can vanish on busy artwork. Heavy ones stay visible from far away.", "Judul tipis bisa hilang di atas gambar yang ramai. Judul tebal tetap terlihat dari jauh."),
@@ -510,7 +510,7 @@ function lessonSpacing(L) {
       h("dt", null, "Leading"), h("dd", null, bi(L, "The space between lines of text.", "Jarak antar baris teks."))),
     h("h3", null, "Tracking"),
     titleInput(L, (v) => (trSample.textContent = v)),
-    h("div", { class: "demo" }, h("div", { class: "demo-stage" }, trSample), tr.row, trCap),
+    h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, trSample), h("div", { class: "demo-ctrls" }, tr.row, trCap)),
     h("h3", null, "Kerning"),
     para(bi(L,
       "Some letters, like T, A, V, W and Y, have diagonal or open shapes that leave bigger gaps next to other letters. Good kerning tucks them closer so that all the gaps look equally wide. Drag the sliders to fix the uneven gaps, then squint: the gaps should look evenly dark.",
@@ -521,7 +521,7 @@ function lessonSpacing(L) {
         "Tight spacing feels intense and urgent. Loose spacing feels calm, airy and cinematic. Uneven kerning makes a title look clumsy or unfinished, which is a quick way to look amateur.",
         "Jarak rapat terasa intens dan mendesak. Jarak renggang terasa tenang, lapang, dan sinematik. Kerning tak rata membuat judul tampak canggung atau belum selesai, cara cepat untuk terlihat amatir.")),
     h("h3", null, "Leading"),
-    h("div", { class: "demo" }, h("div", { class: "demo-stage" }, leadBox), ld.row, leadCap),
+    h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, leadBox), h("div", { class: "demo-ctrls" }, ld.row, leadCap)),
   );
 }
 
@@ -564,7 +564,7 @@ function lessonOrientation(L) {
       "Orientation is how the letters stand: upright, slanted or rotated. Slanting and rotating are the quickest ways to add movement to a flat title.",
       "Orientasi adalah cara huruf berdiri: tegak, miring, atau diputar. Memiringkan dan memutar adalah cara tercepat untuk menambah gerak pada judul yang datar.")),
     titleInput(L, (v) => { text = v; draw(); }),
-    h("div", { class: "demo" }, h("div", { class: "demo-stage tall" }, wrapper), s1.row, cap1, s2.row, cap2, s3.row, cap3),
+    h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage tall" }, wrapper), h("div", { class: "demo-ctrls" }, s1.row, cap1, s2.row, cap2, s3.row, cap3)),
     bullets([
       bi(L, "A tilt of about 5–10° looks intentional. A tilt of only 1–2° tends to look like a mistake.", "Kemiringan sekitar 5–10° terlihat disengaja. Kemiringan hanya 1–2° cenderung terlihat seperti kesalahan."),
       bi(L, "Make the slant match the action: a forward lean matches movement to the right.", "Samakan kemiringan dengan aksi: condong ke depan cocok dengan gerak ke kanan."),
@@ -588,7 +588,7 @@ function lessonChecklist(L) {
   ];
   return h("div", null,
     para(bi(L, "Here is everything in one list. The quiz that follows tests these ideas with real examples. Take your time: every answer comes with a short note.", "Ini semuanya dalam satu daftar. Kuis berikutnya menguji ide-ide ini dengan contoh nyata. Santai saja: setiap jawaban disertai catatan singkat.")),
-    h("ol", { class: "checklist" }, rules.map((r) => h("li", null, r))),
+    h("ol", { class: "checklist checklist-grid" }, rules.map((r) => h("li", null, r))),
     h("p", { class: "hint" }, bi(L, "Lessons 1–5 are based on the workshop slides \"Choosing Typefaces\". Lessons 6–8 add weight, width, spacing and orientation for comic titles.", "Pelajaran 1–5 berdasarkan slide workshop \"Choosing Typefaces\". Pelajaran 6–8 menambahkan ketebalan, lebar, jarak, dan orientasi untuk judul komik.")),
   );
 }
