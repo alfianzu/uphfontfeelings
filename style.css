@@ -35,9 +35,29 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .brand { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 1.15rem; display: flex; align-items: center; gap: 10px; }
 .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+.topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lesson-select {
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  max-width: 280px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.lesson-select:hover, .lesson-select:focus {
+  border-color: var(--ink);
+}
 .lang { display: inline-flex; gap: 3px; background: var(--soft); padding: 3px; border-radius: 10px; border: 1px solid var(--line); }
 .lang-btn { font: inherit; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; border: 0; background: transparent; color: var(--muted); padding: 5px 12px; border-radius: 7px; cursor: pointer; transition: background 0.15s, color 0.15s; }
 .lang-btn:hover { color: var(--ink); }
@@ -146,6 +166,57 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 #hud-streak { margin-right: 12px; }
 .progress { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; }
 #bar-progress { height: 100%; width: 0; background: var(--ink); transition: width 0.5s ease; }
+
+/* Bottom Lesson Navigation & Dropdown */
+.lesson-bottom-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.lesson-bottom-nav .lesson-nav-wrap {
+  flex: 0 1 320px;
+  text-align: center;
+}
+.lesson-bottom-nav .lesson-select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.lesson-bottom-nav .lesson-select:hover,
+.lesson-bottom-nav .lesson-select:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(184, 85, 58, 0.15);
+}
+@media (max-width: 640px) {
+  .lesson-bottom-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .lesson-bottom-nav .lesson-nav-wrap {
+    order: 2;
+    max-width: 100%;
+  }
+  .lesson-bottom-nav #btn-l-back {
+    order: 1;
+  }
+  .lesson-bottom-nav #btn-l-next {
+    order: 3;
+  }
+}
 
 /* ---------- Question & Quiz Desktop Layout ---------- */
 .qcard { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 32px; box-shadow: 0 6px 24px rgba(42, 40, 37, 0.04); }
@@ -330,10 +401,10 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 /* Roles Grid (Lesson 3 & 4) */
 .rolegrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
 @media (max-width: 820px) { .rolegrid { grid-template-columns: 1fr; } }
-.rolecard { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; background: var(--bg); min-width: 0; display: flex; flex-direction: column; justify-content: space-between; }
-.rolecard .role-name { display: block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.72rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
-.rolecard .sample { display: block; font-size: 1.7rem; line-height: 1.2; margin-bottom: 10px; overflow-wrap: anywhere; }
-.rolecard p { font-size: 0.92rem; margin-bottom: 8px; }
+.rolecard { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; background: var(--bg); min-width: 0; display: flex; flex-direction: column; justify-content: flex-start; text-align: left; }
+.rolecard .role-name { display: block; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.74rem; font-weight: 700; color: var(--accent); margin-bottom: 10px; text-align: left; }
+.rolecard .sample { display: block; font-size: 1.7rem; line-height: 1.25; margin-bottom: 10px; overflow-wrap: anywhere; text-align: left; }
+.rolecard p { font-size: 0.92rem; line-height: 1.62; margin-top: 10px; margin-bottom: 0; text-align: left; }
 
 /* Interactive Demo Sandboxes (Lessons 3, 6, 7, 8) */
 .demo { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; background: var(--bg); margin: 16px 0; }
@@ -404,17 +475,59 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 .chip-toggle:hover { border-color: var(--ink); }
 .chip-toggle[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-.steps, .checklist { padding-left: 22px; margin: 10px 0 16px; }
-.steps li, .checklist li { margin-bottom: 8px; }
-.checklist { list-style: none; padding: 0; counter-reset: c; }
-.checklist li { counter-increment: c; position: relative; padding-left: 38px; margin-bottom: 12px; }
-.checklist li::before { content: counter(c); position: absolute; left: 0; top: 1px; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; }
-@media (min-width: 880px) {
-  .checklist-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px 32px;
+.steps { padding-left: 22px; margin: 10px 0 16px; }
+.steps li { margin-bottom: 8px; }
+
+/* Lesson 10 Checklist: uniform distance/leading between all points */
+.checklist-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 36px;
+  margin: 16px 0 24px;
+}
+@media (max-width: 820px) {
+  .checklist-wrap {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
+}
+.checklist-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.checklist-col:first-child {
+  counter-reset: checklist-num 0;
+}
+.checklist-col:last-child {
+  counter-reset: checklist-num 5;
+}
+.checklist-col li {
+  counter-increment: checklist-num;
+  position: relative;
+  padding-left: 38px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+}
+.checklist-col li::before {
+  content: counter(checklist-num);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  display: grid;
+  place-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .split { display: grid; grid-template-columns: 1fr 190px; gap: 24px; align-items: center; }
@@ -439,8 +552,8 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 }
 
 /* Specimen wraps for Lesson 4 */
-.specimen-wrap { margin: 10px 0 14px; }
-.specimen-svg { width: 100%; height: auto; display: block; border-radius: 8px; }
+.specimen-wrap { margin: 12px 0 16px; }
+.specimen-svg { width: 100%; height: auto; display: block; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04); }
 
 /* Mood grid for Lesson 4 */
 .mood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 16px 0 22px; }
@@ -451,8 +564,55 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
 .mood-cap { font-size: 0.88rem; color: var(--ink); margin: 0 !important; }
 .mood-cap strong { color: var(--muted); font-size: 0.82rem; display: block; margin-bottom: 2px; }
 
+/* 4-Field Controls Grid & Genre Presets for Lesson 5 */
+.cover-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 16px;
+  margin: 16px 0 14px;
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+@media (max-width: 640px) {
+  .cover-inputs-grid { grid-template-columns: 1fr; }
+}
+.cover-input-ctrl {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 !important;
+}
+.cover-input-ctrl .ctrl-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.cover-input-ctrl input.demo-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cover-genre-presets {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0 0 14px;
+}
+.cover-genre-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
 /* Tier cards and cover layout for Lesson 5 */
-.cover-layout-split { grid-template-columns: 1.25fr 260px; gap: 32px; align-items: start; margin: 20px 0; }
+.cover-layout-split { grid-template-columns: 1.28fr 270px; gap: 32px; align-items: start; margin: 18px 0 24px; }
 @media (min-width: 880px) {
   .cover-frame {
     position: sticky;
@@ -460,13 +620,170 @@ input:focus { border-color: var(--ink); box-shadow: 0 0 0 3px rgba(42, 40, 37, 0
   }
 }
 @media (max-width: 720px) { .cover-layout-split { grid-template-columns: 1fr; } }
-.tier-card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
-.tier-card p { font-size: 0.9rem; margin: 0; line-height: 1.55; }
-.tier-badge { display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 9px; border-radius: 4px; margin-bottom: 8px; }
-.tier-badge.t1 { background: var(--ink); color: #f59e0b; }
-.tier-badge.t2 { background: var(--soft); color: var(--ink); }
-.tier-badge.t3 { background: #e8f1ea; color: #46745c; }
-.cover-frame { max-width: 260px; width: 100%; justify-self: center; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.25); border-radius: 8px; overflow: hidden; background: #0b1329; }
+
+/* Unified Tier Container for Lesson 5 */
+.tier-unified-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+.tier-unified-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.tier-unified-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.tier-unified-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  background: var(--soft);
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.tier-unified-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tier-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--soft);
+  border: 1px solid transparent;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.tier-row:hover {
+  border-color: var(--line);
+  background: var(--bg);
+}
+.tier-row-badge {
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+.tier-pill {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 800;
+  background: #3d3934;
+  color: #fff;
+}
+.tier-pill.t1 { background: #b45309; }
+.tier-pill.t2 { background: #b91c1c; }
+.tier-pill.t3 { background: #0369a1; }
+.tier-pill.t4 { background: #475569; }
+.tier-pill.t5 { background: #4f46e5; }
+.tier-pill.t6 { background: #0f766e; }
+.tier-row-body {
+  flex: 1;
+  min-width: 0;
+}
+.tier-row-heading {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 3px;
+  line-height: 1.35;
+}
+.tier-row-text {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* Two-Flow & Eye-Tracking Control Panel */
+.flow-switch-panel {
+  background: var(--soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 14px 0 18px;
+}
+.flow-switch-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+.flow-switch-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+}
+.flow-switch-left .small-label {
+  margin: 0;
+}
+.flow-controls-bar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.eye-toggle-chip {
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  padding: 6px 15px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  border: 1.5px solid #b8553a;
+}
+.eye-toggle-chip[aria-pressed="true"] {
+  background: #b8553a;
+  color: #fffdf8;
+  border-color: #b8553a;
+  box-shadow: 0 2px 8px rgba(184, 85, 58, 0.25);
+}
+.eye-toggle-chip[aria-pressed="false"] {
+  background: var(--bg);
+  color: var(--muted);
+  border-color: var(--line);
+  box-shadow: none;
+}
+.eye-toggle-chip:hover {
+  border-color: #b8553a;
+  transform: translateY(-1px);
+}
+.flow-desc-note {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 10px 0 0 !important;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.cover-frame { max-width: 270px; width: 100%; justify-self: center; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.25); border-radius: 8px; overflow: hidden; background: #0b1329; }
 .cover-svg { width: 100%; height: auto; display: block; }
 
 /* Interactive cover generator for Lesson 5 */

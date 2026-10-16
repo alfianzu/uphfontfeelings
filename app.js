@@ -20,8 +20,10 @@ const KEYS = { lang: "ff-lang", name: "ff-name", email: "ff-email", board: "ff-l
 const T = {
   en: {
     appName: "Font Feelings",
+    goToLesson: "Jump to lesson…",
+    lessonJumpOpt: (n, title) => `${n}. ${title}`,
     startTitle: "Every font has a personality.",
-    startLead: "Choosing a title font for your comic starts with understanding that every font has a character. First a short lesson, then a 15-question quiz. You will learn how a font's character, weight, spacing and angle shape the feeling of your title. No design experience needed.",
+    startLead: "Choosing a title font for your comic starts with understanding that every typeface has a distinct character. Explore 10 interactive lessons on typographic voice, hierarchy, spacing, orientation, and cover color—then test your eye in a 15-question quiz. No prior design experience needed.",
     nameLabel: "Your name",
     namePlaceholder: "e.g. Alex",
     nameError: "Please enter your name to start.",
@@ -85,67 +87,69 @@ const T = {
   },
   id: {
     appName: "Font Feelings",
-    startTitle: "Setiap font punya kepribadian.",
-    startLead: "Memilih font judul untuk komikmu dimulai dari memahami bahwa setiap font punya karakter. Pertama pelajaran singkat, lalu kuis 15 soal. Kamu akan belajar bagaimana karakter, ketebalan, jarak, dan sudut font membentuk rasa judulmu. Tidak perlu pengalaman desain.",
-    nameLabel: "Namamu",
+    goToLesson: "Pilih materi pelajaran…",
+    lessonJumpOpt: (n, title) => `${n}. ${title}`,
+    startTitle: "Setiap huruf punya karakter.",
+    startLead: "Memilih rupa huruf (typeface) untuk judul komik dimulai dari memahami bahwa setiap font memiliki kepribadian visual. Pelajari 10 materi singkat yang interaktif tentang karakter huruf, hierarki sampul, pengaturan spasi, kemiringan, hingga komposisi warna—lalu uji kepekaan matamu lewat 15 soal kuis. Tidak perlu latar belakang desain.",
+    nameLabel: "Nama kamu",
     namePlaceholder: "mis. Alex",
-    nameError: "Isi namamu dulu untuk mulai.",
-    start: "Mulai pelajaran",
-    skipLessons: "Lewati pelajaran, langsung ke kuis",
+    nameError: "Silakan isi namamu terlebih dahulu untuk memulai.",
+    start: "Mulai materi",
+    skipLessons: "Lewati materi, langsung ke kuis",
     lessonOf: (n, total) => `Pelajaran ${n} dari ${total}`,
-    lessonBack: "Kembali", lessonNext: "Pelajaran berikutnya", lessonStartQuiz: "Mulai kuis", skipToQuiz: "Lewati ke kuis",
-    reviewLessons: "Tinjau pelajaran",
-    noTimer: "Tanpa timer, tanpa terburu-buru. Setiap jawaban disertai catatan singkat yang menjelaskan alasannya.",
+    lessonBack: "Sebelumnya", lessonNext: "Pelajaran berikutnya", lessonStartQuiz: "Mulai kuis", skipToQuiz: "Langsung ke kuis",
+    reviewLessons: "Pelajari ulang materi",
+    noTimer: "Tanpa batas waktu, tak perlu terburu-buru. Setiap jawaban dilengkapi penjelasan singkat yang mudah dipahami.",
     leaderboard: "Papan peringkat",
-    best: (n) => `Terbaikmu: ${n} poin`,
+    best: (n) => `Skor terbaikmu: ${n} poin`,
     qOf: (n, total) => `Soal ${n} dari ${total}`,
     pts: "poin",
-    sec_compare: "Rasakan perbedaannya", sec_trait: "Temukan katanya", sec_style: "Sebut gayanya", sec_role: "Kenali perannya",
-    sec_weight: "Ketebalan", sec_width: "Lebar", sec_tracking: "Jarak huruf", sec_kerning: "Kerning", sec_orient: "Kemiringan dan rotasi",
-    sec_scenario: "Pilih untuk komikmu", sec_anach: "Temukan yang tidak cocok",
-    right: "Benar",
-    wrong: "Belum tepat",
+    sec_compare: "Rasakan perbedaannya", sec_trait: "Kenali karakternya", sec_style: "Tebak gaya visualnya", sec_role: "Pahami fungsi huruf",
+    sec_weight: "Ketebalan (Weight)", sec_width: "Proporsi lebar (Width)", sec_tracking: "Jarak antarhuruf (Tracking)", sec_kerning: "Kerapatan pasangan huruf (Kerning)", sec_orient: "Kemiringan & rotasi",
+    sec_scenario: "Pilih untuk sampul komikmu", sec_anach: "Temukan ketidakcocokan zaman",
+    right: "Tepat sekali!",
+    wrong: "Kurang tepat",
     answerIs: (a) => `Jawaban: ${a}`,
-    lookFor: "Perhatikan", goodToKnow: "Perlu diketahui",
-    about: (n) => `Tentang ${n}`,
-    next: "Lanjut", finish: "Lihat hasilku",
-    streakLabel: (n) => `🔥 ${n} berturut-turut`,
-    resHello: (n) => `Kerja bagus, ${n}`,
-    points: "poin", correct: "Benar", accuracy: "Akurasi", bestStreak: "Rentetan terbaik",
-    review: "Tinjau jawabanmu",
-    youAre: (n, total) => `Kamu peringkat #${n} dari ${total} di papan peringkat perangkat ini.`,
+    lookFor: "Ciri visual", goodToKnow: "Tips desain",
+    about: (n) => `Profil ${n}`,
+    next: "Lanjut", finish: "Lihat hasil akhir",
+    streakLabel: (n) => `🔥 ${n} benar beruntun`,
+    resHello: (n) => `Kerja bagus, ${n}!`,
+    points: "poin", correct: "Benar", accuracy: "Akurasi", bestStreak: "Beruntun terbaik",
+    review: "Tinjau pembahasan jawabanmu",
+    youAre: (n, total) => `Kamu berada di peringkat #${n} dari ${total} pada perangkat ini.`,
     newBest: "Rekor pribadi baru!",
-    emailLabel: "Kirim hasilku ke emailku",
+    emailLabel: "Kirim hasil ke email",
     emailPlaceholder: "kamu@contoh.com",
     emailBtn: "Kirim",
-    copyBtn: "Salin hasil saja",
+    copyBtn: "Salin teks hasil",
     emailBad: "Masukkan alamat email yang valid.",
-    emailOpened: "Aplikasi emailmu seharusnya terbuka dengan hasil yang siap dikirim. Jika tidak, pakai \"Salin hasil saja\".",
+    emailOpened: "Aplikasi emailmu akan terbuka dengan hasil yang siap dikirim. Jika tidak terbuka, gunakan tombol \"Salin teks hasil\".",
     emailSending: "Mengirim…",
-    emailSent: "Terkirim! Cek kotak masukmu.",
-    emailFail: "Gagal mengirim. Coba \"Salin hasil saja\".",
-    copied: "Tersalin. Tempel di mana pun kamu mau.",
+    emailSent: "Terkirim! Silakan periksa kotak masukmu.",
+    emailFail: "Gagal mengirim otomatis. Gunakan tombol \"Salin teks hasil\".",
+    copied: "Tersalin! Kamu bisa menempelkannya di mana saja.",
     playAgain: "Main lagi", celebrate: "Rayakan lagi",
-    boardTitle: "Papan peringkat",
-    boardNote: "Skor disimpan di browser pada perangkat ini.",
-    boardEmpty: "Belum ada skor. Jadilah yang pertama!",
-    back: "Kembali", clear: "Hapus papan peringkat",
-    clearConfirm: "Hapus semua skor dari papan peringkat perangkat ini?",
+    boardTitle: "Papan Peringkat",
+    boardNote: "Skor tersimpan secara lokal pada peramban di perangkat ini.",
+    boardEmpty: "Belum ada skor tercatat. Jadilah yang pertama!",
+    back: "Kembali", clear: "Kosongkan papan peringkat",
+    clearConfirm: "Hapus semua data skor dari papan peringkat di perangkat ini?",
     boardLine: (c, t, d) => `${c}/${t} benar · ${d}`,
     ranks: [
-      { min: 14, title: "Pembisik Huruf", msg: "Kamu bisa mendengar apa kata sebuah font sebelum ia mengucapkan kata apa pun." },
-      { min: 11, title: "Mata Tajam", msg: "Kamu membaca suasana hampir semua font dengan mudah. Bagus sekali." },
-      { min: 8, title: "Mulai Peka", msg: "Kamu sudah merasakan banyak hal. Terus perhatikan bentuk, goresan, dan lengkungannya." },
-      { min: 5, title: "Pemanasan", msg: "Awal yang baik. Lain kali, perhatikan seberapa bulat atau tajam hurufnya." },
-      { min: 0, title: "Baru Mulai", msg: "Semua orang mulai dari sini. Main lagi dan lihat bagaimana bentuk mengubah rasa." },
+      { min: 14, title: "Pakar Rasa Huruf", msg: "Kamu langsung menangkap pesan dan suasana sebuah font bahkan sebelum membaca kata-katanya." },
+      { min: 11, title: "Mata Desain Tajam", msg: "Kamu mampu membaca karakter dan suasana berbagai jenis huruf dengan sangat baik." },
+      { min: 8, title: "Mulai Peka Visual", msg: "Kepekaan tipografimu sudah tumbuh. Terus amati ketebalan garis, sudut, dan lengkungan huruf." },
+      { min: 5, title: "Tahap Pemanasan", msg: "Awal yang baik! Selanjutnya, coba perhatikan kontras antara bentuk huruf yang membulat dan yang bersudut tajam." },
+      { min: 0, title: "Langkah Pertama", msg: "Semua desainer memulai dari sini. Coba lagi dan amati bagaimana anatomi huruf mengubah suasana cerita." },
     ],
-    mailSubject: (s) => `Hasil Font Feelings-ku: ${s} poin`,
-    mailIntro: (n) => `Hai ${n}, ini hasil Font Feelings-mu.`,
-    mailScore: "Skor", mailCorrect: "Benar", mailRank: "Peringkat", mailAnswers: "Jawabanmu", mailRemember: "Yang perlu diingat",
+    mailSubject: (s) => `Hasil Font Feelings: ${s} poin`,
+    mailIntro: (n) => `Halo ${n}, berikut adalah ringkasan hasil Font Feelings kamu.`,
+    mailScore: "Skor", mailCorrect: "Jawaban benar", mailRank: "Predikat", mailAnswers: "Rincian jawaban", mailRemember: "Prinsip utama yang perlu diingat",
     mailTakeaways: [
-      "Font berbicara sebelum kata-katanya: kita merasakan suasananya sebelum membaca.",
-      "Kepribadian berasal dari bentuk: goresan tebal atau tipis, sudut bulat atau tajam, huruf lebar atau sempit.",
-      "Cocokkan suasana font dengan pesanmu.",
+      "Huruf berbicara sebelum kata-katanya dibaca: pembaca merasakan suasananya terlebih dahulu.",
+      "Karakter visual lahir dari anatomi huruf: tebal-tipis goresan (stroke), sudut tajam atau membulat, serta proporsi lebar-sempitnya.",
+      "Selaraskan suasana rupa huruf (typeface), hierarki tata letak, dan palet warna dengan jiwa ceritamu.",
     ],
   },
 };
@@ -169,9 +173,34 @@ let boardBack = "screen-start";
 /* ---------- Screens ---------- */
 function show(id) {
   document.querySelectorAll(".screen").forEach((s) => s.classList.toggle("active", s.id === id));
+  syncLessonNavigation();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 const activeScreen = () => document.querySelector(".screen.active").id;
+
+function populateGlobalLessonSelect() {
+  const sel = $("global-lesson-select");
+  if (!sel || typeof LESSONS === "undefined") return;
+  const currentScreen = activeScreen();
+  sel.innerHTML = "";
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = t("goToLesson");
+  sel.append(placeholder);
+
+  LESSONS.forEach((ls, idx) => {
+    const opt = document.createElement("option");
+    opt.value = String(idx);
+    opt.textContent = t("lessonJumpOpt", idx + 1, ls.title[lang]);
+    sel.append(opt);
+  });
+
+  sel.value = currentScreen === "screen-learn" ? String(lessonIdx) : "";
+}
+
+function syncLessonNavigation() {
+  populateGlobalLessonSelect();
+}
 
 function applyStaticText() {
   document.documentElement.lang = lang;
@@ -186,6 +215,7 @@ function applyStaticText() {
   const best = Number(store.get("ff-best") || 0);
   $("best-start").textContent = best ? t("best", best) : "";
   $("btn-skip-start").hidden = !store.get(KEYS.learned);
+  populateGlobalLessonSelect();
 }
 
 function setLang(l) {
@@ -204,12 +234,22 @@ function setLang(l) {
 let playerName = "";
 let lessonIdx = 0;
 
+function ensurePlayerName() {
+  if (playerName) return playerName;
+  const typed = $("name-input") && $("name-input").value ? $("name-input").value.trim().replace(/\s+/g, " ") : "";
+  const saved = store.get(KEYS.name) || "";
+  playerName = typed || saved || (lang === "id" ? "Kreator" : "Creator");
+  return playerName;
+}
+
 function startFlow(name) {
   playerName = name;
   goLesson(0);
 }
 function goLesson(i) {
-  lessonIdx = i;
+  stopConfetti();
+  ensurePlayerName();
+  lessonIdx = Math.max(0, Math.min(LESSONS.length - 1, Number(i) || 0));
   show("screen-learn");
   renderLesson();
 }
@@ -225,9 +265,10 @@ function renderLesson() {
   $("btn-l-next").textContent = lessonIdx === n - 1 ? t("lessonStartQuiz") : t("lessonNext");
   $("btn-skip").textContent = t("skipToQuiz");
   $("btn-skip").hidden = lessonIdx === n - 1;
+  syncLessonNavigation();
 }
 function lessonNext() {
-  if (lessonIdx >= LESSONS.length - 1) { store.set(KEYS.learned, "1"); return startGame(playerName); }
+  if (lessonIdx >= LESSONS.length - 1) { store.set(KEYS.learned, "1"); return startGame(ensurePlayerName()); }
   goLesson(lessonIdx + 1);
 }
 function lessonBack() {
@@ -636,6 +677,21 @@ $("btn-board-clear").addEventListener("click", () => {
 $("btn-email").addEventListener("click", sendEmail);
 $("email-input").addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); sendEmail(); } });
 $("btn-copy").addEventListener("click", copyResults);
+if ($("global-lesson-select")) {
+  $("global-lesson-select").addEventListener("change", (e) => {
+    const val = e.target.value;
+    if (val !== "") {
+      goLesson(Number(val));
+    }
+  });
+}
+if ($("brand-home")) {
+  $("brand-home").addEventListener("click", () => {
+    stopConfetti();
+    show("screen-start");
+    applyStaticText();
+  });
+}
 document.querySelectorAll(".lang-btn").forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
 document.addEventListener("keydown", (e) => {
   if (!state || activeScreen() !== "screen-quiz" || state.answered) return;

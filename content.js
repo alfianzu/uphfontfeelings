@@ -27,59 +27,59 @@ const opposite = (p) => { const x = AXES[POLE_AXIS[p]]; return x.a === p ? x.b :
 const TRAITS = {
   strong: {
     en: { label: "Strong", why: "Thick strokes and solid, blocky shapes look heavy and sturdy, like something that is hard to push over. That is why we read them as powerful.", cues: "heavy strokes · wide, compact shapes · little empty space" },
-    id: { label: "Kuat", why: "Goresan tebal dan bentuk padat seperti balok terlihat berat dan kokoh, seperti benda yang sulit didorong roboh. Karena itu kita membacanya sebagai kuat.", cues: "goresan tebal · bentuk lebar dan padat · sedikit ruang kosong" },
+    id: { label: "Kuat & Tegas", why: "Goresan tebal dan bentuk padat menyerupai balok memberikan kesan berbobot dan kokoh, layaknya struktur yang tak mudah goyah. Itulah sebabnya mata kita menangkap kesan bertenaga.", cues: "goresan tebal · bentuk lebar dan padat · ruang dalam huruf sempit" },
   },
   delicate: {
     en: { label: "Delicate", why: "Thin, light strokes look like they could break easily, which gives a feeling of fragility, refinement and care.", cues: "hairline strokes · slim shapes · lots of white space" },
-    id: { label: "Halus", why: "Goresan tipis dan ringan terlihat mudah patah, sehingga memberi kesan rapuh, halus, dan penuh kehati-hatian.", cues: "goresan setipis rambut · bentuk ramping · banyak ruang kosong" },
+    id: { label: "Halus & Anggun", why: "Goresan tipis dan ringan memberikan kesan lembut, rapuh, serta dikerjakan dengan penuh ketelitian.", cues: "goresan tipis (hairline) · proporsi ramping · ruang kosong yang lega" },
   },
   fast: {
     en: { label: "Fast", why: "Slanted, narrow or streamlined letters seem to lean forward, like something that is already in motion.", cues: "slanted or leaning letters · sharp, streamlined cuts · stretched horizontal lines" },
-    id: { label: "Cepat", why: "Huruf miring, sempit, atau ramping tampak condong ke depan, seperti sesuatu yang sudah bergerak.", cues: "huruf miring · potongan tajam dan aerodinamis · garis horizontal memanjang" },
+    id: { label: "Cepat & Dinamis", why: "Huruf yang miring, ramping, atau aerodinamis tampak condong ke depan, seolah sedang melesat dalam kecepatan tinggi.", cues: "kemiringan ke depan · potongan sudut tajam · tarikan garis horizontal dinamis" },
   },
   slow: {
     en: { label: "Slow", why: "Wide, round, open letters with calm, flowing curves invite the eye to take its time.", cues: "wide, open forms · gentle curves · generous spacing · calligraphic rhythm" },
-    id: { label: "Lambat", why: "Huruf lebar, bulat, dan terbuka dengan lengkung tenang yang mengalir mengajak mata berjalan pelan.", cues: "bentuk lebar dan terbuka · lengkung lembut · jarak lega · irama kaligrafi" },
+    id: { label: "Tenang & Mengalir", why: "Bentuk huruf yang lebar, membulat, dan terbuka dengan lengkungan halus mengajak mata pembaca menikmati teks secara perlahan.", cues: "proporsi lebar dan terbuka · lengkungan lembut · spasi lega · irama kaligrafis" },
   },
   hot: {
     en: { label: "Hot", why: "Energetic, bold and exuberant shapes feel loud and passionate, like fire or a warm summer day.", cues: "bold, lively shapes · uneven or exaggerated details · strong personality" },
-    id: { label: "Panas", why: "Bentuk yang enerjik, tebal, dan meledak-ledak terasa riuh dan penuh gairah, seperti api atau hari musim panas.", cues: "bentuk tebal dan hidup · detail tak rata atau berlebihan · kepribadian kuat" },
+    id: { label: "Berapi-api & Ekspresif", why: "Bentuk yang tebal, meledak-ledak, dan penuh energi terasa lantang serta bergairah, bagaikan kobaran api.", cues: "bentuk tebal yang ekspresif · detail dinamis · karakter visual mencolok" },
   },
   cold: {
     en: { label: "Cold", why: "Precise, geometric, evenly spaced shapes feel clinical and technical, with little emotion, like steel or ice.", cues: "geometric precision · even strokes · straight lines and sharp angles" },
-    id: { label: "Dingin", why: "Bentuk presisi, geometris, dan berjarak rata terasa klinis dan teknis, minim emosi, seperti baja atau es.", cues: "presisi geometris · goresan rata · garis lurus dan sudut tajam" },
+    id: { label: "Dingin & Teknis", why: "Bentuk geometris yang presisi dengan jarak seragam terasa klinis, objektif, dan minim luapan emosi—layaknya baja atau es.", cues: "presisi geometris · ketebalan goresan seragam · garis lurus dan sudut siku" },
   },
   masculine: {
     en: { label: "Masculine", why: "Heavy, angular, compact letters with sturdy corners are traditionally linked with toughness and force. This is a common association, not a rule.", cues: "thick, square or angular shapes · compact build · strong corners" },
-    id: { label: "Maskulin", why: "Huruf berat, bersudut, dan padat dengan sudut kokoh secara tradisional dikaitkan dengan ketangguhan dan tenaga. Ini asosiasi umum, bukan aturan.", cues: "bentuk tebal, kotak, atau bersudut · bangun padat · sudut kokoh" },
+    id: { label: "Maskulin", why: "Huruf berbobot tebal, bersudut tegas, dan berstruktur padat secara konvensional sering diasosiasikan dengan ketangguhan fisik. Ini adalah kecenderungan persepsi visual, bukan aturan mutlak.", cues: "bentuk kotak atau bersudut tegas · struktur padat · sudut kokoh" },
   },
   feminine: {
     en: { label: "Feminine", why: "Slender, curved, flowing strokes, often with contrast or flourishes, are traditionally linked with grace and elegance. This is a common association, not a rule.", cues: "slim, curvy forms · high contrast between thick and thin · flourishes" },
-    id: { label: "Feminin", why: "Goresan ramping, melengkung, dan mengalir, sering dengan kontras atau hiasan, secara tradisional dikaitkan dengan keanggunan. Ini asosiasi umum, bukan aturan.", cues: "bentuk ramping dan melengkung · kontras tebal–tipis tinggi · hiasan" },
+    id: { label: "Feminin", why: "Goresan ramping yang melengkung luwes—sering kali memiliki kontras tebal-tipis atau lekuk dekoratif—umumnya diasosiasikan dengan keanggunan. Ini adalah kecenderungan visual, bukan aturan baku.", cues: "proporsi ramping melengkung · kontras tebal-tipis tinggi · ujung huruf luwes" },
   },
   soft: {
     en: { label: "Soft", why: "Rounded corners and gentle curves feel safe to touch, like a pillow, so the font feels gentle.", cues: "rounded corners · curves instead of angles · uneven, hand-made edges" },
-    id: { label: "Lembut", why: "Sudut membulat dan lengkung lembut terasa aman disentuh, seperti bantal, sehingga font terasa lembut.", cues: "sudut membulat · lengkung, bukan sudut · tepi tak rata buatan tangan" },
+    id: { label: "Lembut", why: "Sudut yang tumpul membulat dan lengkungan halus terasa nyaman di mata, menciptakan kesan akrab dan bersahabat.", cues: "sudut membulat (rounded) · dominasi garis lengkung · tepian organik" },
   },
   hard: {
     en: { label: "Hard", why: "Sharp corners, straight lines and rigid angles feel like they could cut or resist, so the font feels firm.", cues: "sharp corners · straight edges · rigid, geometric structure" },
-    id: { label: "Keras", why: "Sudut tajam, garis lurus, dan sudut kaku terasa bisa menggores atau menahan, sehingga font terasa keras.", cues: "sudut tajam · tepi lurus · struktur kaku dan geometris" },
+    id: { label: "Keras & Kaku", why: "Sudut yang tajam, garis lurus, dan konstruksi kaku memberi kesan tegas, tajam, serta tak kenal kompromi.", cues: "sudut lancip · tepian lurus · konstruksi geometris yang kaku" },
   },
   old: {
     en: { label: "Old", why: "Details inherited from history (pen-drawn strokes, blackletter, classic serifs, typewriter wear) make us think of the past.", cues: "calligraphic, pen-like strokes · ornate or worn details · classic serif shapes" },
-    id: { label: "Tua", why: "Detail warisan sejarah (goresan pena, blackletter, serif klasik, bekas mesin ketik) membuat kita teringat masa lalu.", cues: "goresan seperti pena kaligrafi · detail berhias atau usang · bentuk serif klasik" },
+    id: { label: "Klasik & Kuno", why: "Detail yang berakar dari sejarah—seperti goresan pena kaligrafi, huruf Gotik (blackletter), serif klasik, atau tekstur ketikan lama—langsung membangkitkan nuansa masa lampau.", cues: "goresan pena kaligrafi · detail ornamen atau tekstur usang · bentuk serif klasik" },
   },
   young: {
     en: { label: "Young", why: "Simple, rounded or geometric shapes without historical decoration feel new, light and full of energy.", cues: "simple geometric forms · no traditional decoration · playful or technological shapes" },
-    id: { label: "Muda", why: "Bentuk sederhana, bulat, atau geometris tanpa hiasan sejarah terasa baru, ringan, dan penuh energi.", cues: "bentuk geometris sederhana · tanpa hiasan tradisional · bentuk ceria atau teknologis" },
+    id: { label: "Muda & Segar", why: "Bentuk geometris atau membulat yang lugas tanpa ornamen tradisional terasa baru, ringan, dan penuh semangat muda.", cues: "bentuk geometris sederhana · tanpa ornamen klasik · karakter lincah atau modern" },
   },
   friendly: {
     en: { label: "Friendly", why: "Round, open, relaxed letters feel like a smile or a wave. They invite you in.", cues: "round, open shapes · relaxed, slightly uneven rhythm · no sharp points" },
-    id: { label: "Ramah", why: "Huruf bulat, terbuka, dan santai terasa seperti senyum atau lambaian. Mereka mengundang kita mendekat.", cues: "bentuk bulat dan terbuka · irama santai, sedikit tak rata · tanpa ujung tajam" },
+    id: { label: "Ramah & Akrab", why: "Bentuk huruf yang membulat, terbuka, dan santai terasa hangat mengundang pembaca untuk masuk ke dalam cerita.", cues: "ruang dalam huruf terbuka · irama santai dan organik · tanpa sudut runcing" },
   },
   threatening: {
     en: { label: "Threatening", why: "Spiky points and very heavy, tight, aggressive shapes echo warning signs and weapons, so they feel intimidating.", cues: "sharp spikes · very heavy or military-style blocks · tight, dark shapes" },
-    id: { label: "Mengancam", why: "Ujung runcing serta bentuk sangat berat, rapat, dan agresif menyerupai rambu bahaya dan senjata, sehingga terasa mengintimidasi.", cues: "ujung runcing · balok sangat berat atau bergaya militer · bentuk rapat dan gelap" },
+    id: { label: "Mencekam & Mengancam", why: "Ujung-ujung meruncing atau blok huruf yang berat, rapat, dan agresif mengingatkan kita pada senjata atau tanda bahaya, sehingga terasa mengintimidasi.", cues: "ujung berduri/runcing · balok berat bergaya militer · siluet gelap dan rapat" },
   },
 };
 
@@ -87,63 +87,63 @@ const TRAITS = {
 const STYLES = {
   medieval: {
     en: { label: "Medieval", why: "Medieval fonts copy the hand lettering of monks and scribes from the Middle Ages. They feel like castles, legends and old books.", cues: "pointed, blackletter shapes · pen-made strokes · dense, ornate forms" },
-    id: { label: "Abad Pertengahan", why: "Font abad pertengahan meniru tulisan tangan para biarawan dan juru tulis zaman dulu. Terasa seperti kastil, legenda, dan buku kuno.", cues: "bentuk runcing ala blackletter · goresan pena · bentuk padat dan berhias" },
+    id: { label: "Abad Pertengahan (Medieval)", why: "Gaya ini mengadaptasi kaligrafi para juru tulis Abad Pertengahan. Sangat lekat dengan suasana kastil, legenda ksatria, sihir, dan naskah kuno.", cues: "bentuk runcing bergaya Gotik (blackletter) · tarikan pena · padat dan berornamen" },
   },
   natural: {
     en: { label: "Natural", why: "Natural fonts look hand-drawn, with slight irregularities, as if made by a person rather than a machine. They suit organic, handmade and eco-friendly things.", cues: "hand-drawn lines · irregular shapes · thin, light, organic strokes" },
-    id: { label: "Alami", why: "Font alami tampak digambar tangan, dengan sedikit ketidakrataan, seolah dibuat manusia, bukan mesin. Cocok untuk hal organik, buatan tangan, dan ramah lingkungan.", cues: "garis gambar tangan · bentuk tak beraturan · goresan tipis dan organik" },
+    id: { label: "Alami & Organik", why: "Font bergaya alami tampak seperti goresan tangan manusia dengan ketidakteraturan yang wajar, bukan hasil cetakan mesin. Cocok untuk tema alam, keseharian, dan karya personal.", cues: "tarikan garis gambar tangan · bentuk organik · goresan ringan dan luwes" },
   },
   brutalist: {
     en: { label: "Brutalist", why: "Brutalist fonts are raw, blunt and heavy, like exposed concrete. They have almost no decoration and make a bold statement.", cues: "ultra-heavy blocks · rough, blunt shapes · no decoration" },
-    id: { label: "Brutalis", why: "Font brutalis terasa mentah, tumpul, dan berat, seperti beton ekspos. Nyaris tanpa hiasan dan membuat pernyataan yang tegas.", cues: "balok sangat tebal · bentuk kasar dan tumpul · tanpa hiasan" },
+    id: { label: "Brutalis", why: "Font brutalis tampil mentah, lugas, dan sangat tebal layaknya beton ekspos. Tanpa basa-basi dekorasi, gaya ini langsung menghantam perhatian pembaca.", cues: "blok huruf ekstra tebal · potongan lugas dan padat · tanpa dekorasi" },
   },
   humanist: {
     en: { label: "Humanist", why: "Humanist fonts are based on handwriting and pen strokes, so they feel warm and natural to read, like a thoughtful person talking.", cues: "slight pen-like variations · open, readable shapes · calm, warm proportions" },
-    id: { label: "Humanis", why: "Font humanis berakar pada tulisan tangan dan goresan pena, sehingga terasa hangat dan alami dibaca, seperti orang bijak yang sedang berbicara.", cues: "variasi halus seperti pena · bentuk terbuka dan mudah dibaca · proporsi tenang dan hangat" },
+    id: { label: "Humanis", why: "Font humanis memadukan struktur rapi dengan jejak proporsi tulisan tangan manusia, sehingga terasa hangat, jelas, dan nyaman dibaca lama.", cues: "variasi goresan halus · ruang huruf terbuka · proporsi hangat dan mudah dibaca" },
   },
   artdeco: {
     en: { label: "Art Deco", why: "Art Deco fonts come from the glamorous 1920s and 30s: geometric, symmetrical and elegant, often with strong thick–thin contrast. They feel luxurious and stylish.", cues: "geometric shapes · thick and thin contrast · symmetry and glamour" },
-    id: { label: "Art Deco", why: "Font Art Deco berasal dari era glamor 1920–30-an: geometris, simetris, dan elegan, sering dengan kontras tebal–tipis yang kuat. Terasa mewah dan bergaya.", cues: "bentuk geometris · kontras tebal–tipis · simetri dan glamor" },
+    id: { label: "Art Deco", why: "Berakar dari era glamor 1920–1930-an: memadukan geometri simetris, garis vertikal tinggi, atau kontras tebal-tipis yang elegan. Memancarkan kesan mewah, klasik, dan teatrikal.", cues: "konstruksi geometris · kontras tebal-tipis · simetris dan glamor" },
   },
   neutral: {
     en: { label: "Neutral", why: "Neutral fonts try not to have a personality of their own, so the words can do the talking. They feel clear, plain and trustworthy.", cues: "plain, even shapes · no decoration · consistent, quiet rhythm" },
-    id: { label: "Netral", why: "Font netral berusaha tidak punya kepribadian sendiri agar kata-katanya yang berbicara. Terasa jelas, polos, dan tepercaya.", cues: "bentuk polos dan rata · tanpa hiasan · irama konsisten dan tenang" },
+    id: { label: "Netral", why: "Font netral dirancang agar tidak menonjolkan emosi tertentu, sehingga isi pesan dapat berbicara dengan jernih, objektif, dan rapi.", cues: "bentuk lugas dan seragam · tanpa ornamen · irama baca yang tenang" },
   },
   childish: {
     en: { label: "Childish", why: "Childish fonts are round, bouncy and simple, like a child's drawing or a toy. They feel innocent, playful and cheerful.", cues: "round, bubbly shapes · bouncy, uneven rhythm · simple, drawn forms" },
-    id: { label: "Kekanak-kanakan", why: "Font kekanak-kanakan bulat, melenting, dan sederhana, seperti gambar anak atau mainan. Terasa polos, ceria, dan suka bermain.", cues: "bentuk bulat dan menggembung · irama melenting dan tak rata · bentuk sederhana seperti gambar" },
+    id: { label: "Dunia Anak (Playful)", why: "Bentuknya bulat menggembung, membal, dan sederhana seperti mainan atau gambar anak-anak. Memancarkan kepolosan, keceriaan, dan rasa aman.", cues: "bentuk bulat menggembung · irama melompat · konstruksi sederhana dan ramah" },
   },
   futuristic: {
     en: { label: "Futuristic", why: "Futuristic fonts look engineered: wide, squared-off and technological, as if from a spaceship dashboard. They feel like science fiction and innovation.", cues: "wide, squared curves · tech-like geometry · clean, sharp cuts" },
-    id: { label: "Futuristik", why: "Font futuristik tampak direkayasa: lebar, bersudut kotak, dan teknologis, seperti dasbor pesawat luar angkasa. Terasa seperti fiksi ilmiah dan inovasi.", cues: "lengkung kotak dan lebar · geometri ala teknologi · potongan bersih dan tajam" },
+    id: { label: "Futuristik", why: "Tampak dirancang secara presisi: melebar, berlengkung kotak (squarish), dan bernuansa teknologi tinggi layaknya antarmuka pesawat antariksa.", cues: "lengkung bersudut kotak · geometri teknologis · potongan sudut tajam dan bersih" },
   },
   traditional: {
     en: { label: "Traditional", why: "Traditional fonts follow classic book-printing shapes, with serifs and graceful contrast. They feel serious, respectable and timeless.", cues: "serifs · thick–thin stroke contrast · classic, balanced proportions" },
-    id: { label: "Tradisional", why: "Font tradisional mengikuti bentuk cetak buku klasik, dengan serif dan kontras yang anggun. Terasa serius, terhormat, dan abadi.", cues: "serif · kontras goresan tebal–tipis · proporsi klasik dan seimbang" },
+    id: { label: "Tradisional & Klasik", why: "Mengikuti tradisi tipografi cetak buku klasik dengan kait (serif) dan kontras tebal-tipis yang anggun. Terasa berwibawa, sastrawi, dan tak lekang waktu.", cues: "kait huruf (serif) · kontras tebal-tipis · proporsi klasik yang seimbang" },
   },
   rustic: {
     en: { label: "Rustic", why: "Rustic fonts look weathered and rough, like painted signs, wood type or old typewriters. They feel countryside, vintage and down-to-earth.", cues: "worn or uneven edges · chunky, wood-type shapes · vintage details" },
-    id: { label: "Rustik", why: "Font rustik tampak usang dan kasar, seperti papan cat, cetakan kayu, atau mesin ketik tua. Terasa pedesaan, vintage, dan membumi.", cues: "tepi usang atau tak rata · bentuk gemuk ala cetakan kayu · detail vintage" },
+    id: { label: "Rustik & Vintage", why: "Tampak bertekstur kasar atau klasik, seperti papan kayu era Wild West, poster cetak tua, atau ketikan mesin tik lama.", cues: "tepian bertekstur/usang · serif balok ala cetakan kayu · detail bernuansa lawas" },
   },
   scientific: {
     en: { label: "Scientific", why: "Scientific fonts are precise and technical, often monospaced, like data, formulas and lab notes. They feel exact, rational and objective.", cues: "even, mechanical spacing · monospaced shapes · precise, technical details" },
-    id: { label: "Ilmiah", why: "Font ilmiah presisi dan teknis, sering monospaced, seperti data, rumus, dan catatan laboratorium. Terasa tepat, rasional, dan objektif.", cues: "jarak mekanis dan rata · bentuk monospaced · detail presisi dan teknis" },
+    id: { label: "Ilmiah & Teknis", why: "Presisi dan sistematis—sering kali berlebar tetap (monospace) seperti kode komputer, data telemetri, atau laporan laboratorium.", cues: "lebar huruf mekanis (monospace) · bentuk presisi · nuansa data dan sains" },
   },
   fresh: {
     en: { label: "Fresh", why: "Fresh fonts are light, round and clean, with an upbeat modern look. They feel youthful, new and energetic, like a new start.", cues: "light, clean shapes · gentle rounded curves · bright, open feel" },
-    id: { label: "Segar", why: "Font segar ringan, bulat, dan bersih, dengan tampilan modern yang ceria. Terasa muda, baru, dan berenergi, seperti awal yang baru.", cues: "bentuk ringan dan bersih · lengkung bulat lembut · kesan cerah dan terbuka" },
+    id: { label: "Segar & Cerah", why: "Ringan, membulat bersih, dan bernuansa modern. Memberi kesan muda, optimis, dan menyegarkan.", cues: "goresan ringan dan bersih · lengkungan bulat lembut · ruang dalam huruf terbuka" },
   },
   contemporary: {
     en: { label: "Contemporary", why: "Contemporary fonts look current: clean, geometric and simple, made for screens and today's brands. They feel modern, confident and up to date.", cues: "clean geometry · simple forms, no decoration · modern proportions" },
-    id: { label: "Kontemporer", why: "Font kontemporer tampak masa kini: bersih, geometris, dan sederhana, dibuat untuk layar dan merek zaman sekarang. Terasa modern, percaya diri, dan mutakhir.", cues: "geometri bersih · bentuk sederhana tanpa hiasan · proporsi modern" },
+    id: { label: "Kontemporer", why: "Mewakili estetika desain masa kini: geometris bersih, lugas, serta dirancang agar tampil tajam di berbagai media modern.", cues: "geometri bersih · bentuk lugas tanpa dekorasi · proporsi modern" },
   },
   smart: {
     en: { label: "Smart", why: "Smart fonts feel intelligent and bookish: refined serifs that suggest knowledge, study and careful thinking.", cues: "refined details · classic serif forms · balanced, careful proportions" },
-    id: { label: "Cerdas", why: "Font cerdas terasa intelek dan bernuansa buku: serif halus yang menyiratkan pengetahuan, studi, dan pemikiran cermat.", cues: "detail halus · bentuk serif klasik · proporsi seimbang dan cermat" },
+    id: { label: "Intelek & Cendekia", why: "Memancarkan kesan cerdas dan literat lewat bentuk serif yang tajam, proporsional, serta penuh pemikiran.", cues: "detail serif yang halus · proporsi buku klasik · kesan akademis dan elegan" },
   },
   funny: {
     en: { label: "Funny", why: "Funny fonts are exaggerated, bouncy and cartoon-like, so they make us smile before we even read the words. They feel playful and humorous.", cues: "exaggerated, cartoonish shapes · bouncy, uneven rhythm · bold outlines" },
-    id: { label: "Lucu", why: "Font lucu berlebihan, melenting, dan seperti kartun, sehingga membuat kita tersenyum sebelum membaca katanya. Terasa jenaka dan penuh canda.", cues: "bentuk berlebihan ala kartun · irama melenting dan tak rata · garis tebal" },
+    id: { label: "Jenaka & Komikal", why: "Proporsinya dilebih-lebihkan, dinamis, dan bergaya kartun sehingga memancing senyum pembaca bahkan sebelum kata-katanya dibaca.", cues: "proporsi ekspresif ala kartun · irama huruf melompat · kesan humoris" },
   },
 };
 const STYLE_KEYS = Object.keys(STYLES);
@@ -175,10 +175,10 @@ const ADJ = (() => {
 
 /* ---------- Roles (from the workshop slides: text, display, decorative) ---------- */
 const ROLES = {
-  text:       { en: "Text face", id: "Text face (font teks)" },
-  display:    { en: "Display face", id: "Display face (font judul)" },
-  decorative: { en: "Decorative face", id: "Decorative face (font dekoratif)" },
-  flex:       { en: "Versatile", id: "Serbaguna" },
+  text:       { en: "Text face", id: "Text face (Font teks bacaan)" },
+  display:    { en: "Display face", id: "Display face (Font judul utama)" },
+  decorative: { en: "Decorative face", id: "Decorative face (Font dekoratif)" },
+  flex:       { en: "Versatile", id: "Serbaguna (Multifungsi)" },
 };
 
 /* ---------- Font library ----------
@@ -233,23 +233,23 @@ const KERN_WORDS = ["TAVERN", "AVATAR", "TOWER"];
 
 /* ---------- Comic scenarios (keyed by the style that fits) ---------- */
 const SCENARIOS = {
-  childish:    { en: "Your comic is a gentle picture-book story for toddlers about a baby dinosaur. Which font fits the cover title best?", id: "Komikmu adalah cerita bergambar lembut untuk balita tentang bayi dinosaurus. Font mana yang paling cocok untuk judul sampul?" },
-  scientific:  { en: "Your comic is a hard sci-fi story about a lab, data and a rogue AI. Which font fits the cover title best?", id: "Komikmu adalah fiksi ilmiah serius tentang laboratorium, data, dan AI pemberontak. Font mana yang paling cocok untuk judul sampul?" },
-  artdeco:     { en: "Your comic is a glamorous 1930s jazz-age detective story. Which font fits the cover title best?", id: "Komikmu adalah cerita detektif glamor era jazz 1930-an. Font mana yang paling cocok untuk judul sampul?" },
-  medieval:    { en: "Your comic is a fantasy adventure of knights, castles and dragons. Which font fits the cover title best?", id: "Komikmu adalah petualangan fantasi tentang ksatria, kastil, dan naga. Font mana yang paling cocok untuk judul sampul?" },
-  natural:     { en: "Your comic is a quiet, hand-drawn diary about life on a small organic farm. Which font fits the cover title best?", id: "Komikmu adalah buku harian bergambar tangan yang tenang tentang kehidupan di pertanian organik kecil. Font mana yang paling cocok untuk judul sampul?" },
-  fresh:       { en: "Your comic is a light, sunny slice-of-life story about teenagers in summer. Which font fits the cover title best?", id: "Komikmu adalah kisah keseharian yang ringan dan cerah tentang remaja di musim panas. Font mana yang paling cocok untuk judul sampul?" },
-  futuristic:  { en: "Your comic is a space adventure about a crew exploring distant planets. Which font fits the cover title best?", id: "Komikmu adalah petualangan luar angkasa tentang awak yang menjelajahi planet jauh. Font mana yang paling cocok untuk judul sampul?" },
-  funny:       { en: "Your comic is a silly gag comic that wants readers to laugh before they read a word. Which font fits the cover title best?", id: "Komikmu adalah komik gokil yang ingin membuat pembaca tertawa sebelum membaca satu kata pun. Font mana yang paling cocok untuk judul sampul?" },
-  rustic:      { en: "Your comic is a dusty Wild West tale of outlaws and sheriffs. Which font fits the cover title best?", id: "Komikmu adalah kisah Wild West berdebu tentang penjahat dan sheriff. Font mana yang paling cocok untuk judul sampul?" },
-  brutalist:   { en: "Your comic is a raw, gritty street story with blunt, heavy energy. Which font fits the cover title best?", id: "Komikmu adalah kisah jalanan yang mentah dan keras dengan energi tumpul dan berat. Font mana yang paling cocok untuk judul sampul?" },
-  traditional: { en: "Your comic is a classic literary adaptation of a nineteenth-century novel. Which font fits the cover title best?", id: "Komikmu adalah adaptasi sastra klasik dari novel abad ke-19. Font mana yang paling cocok untuk judul sampul?" },
+  childish:    { en: "Your comic is a gentle picture-book story for toddlers about a baby dinosaur. Which font fits the cover title best?", id: "Komikmu adalah cerita bergambar untuk anak-anak tentang petualangan bayi dinosaurus yang lucu. Font mana yang paling tepat untuk judul sampulnya?" },
+  scientific:  { en: "Your comic is a hard sci-fi story about a lab, data and a rogue AI. Which font fits the cover title best?", id: "Komikmu mengangkat kisah fiksi ilmiah tentang riset laboratorium, enkripsi data, dan akal imitasi (AI). Font mana yang paling tepat untuk judul sampulnya?" },
+  artdeco:     { en: "Your comic is a glamorous 1930s jazz-age detective story. Which font fits the cover title best?", id: "Komikmu bercerita tentang detektif era jazz 1930-an yang glamor dan penuh misteri. Font mana yang paling tepat untuk judul sampulnya?" },
+  medieval:    { en: "Your comic is a fantasy adventure of knights, castles and dragons. Which font fits the cover title best?", id: "Komikmu bertema petualangan fantasi tentang ksatria, benteng kerajaan, dan naga kuno. Font mana yang paling tepat untuk judul sampulnya?" },
+  natural:     { en: "Your comic is a quiet, hand-drawn diary about life on a small organic farm. Which font fits the cover title best?", id: "Komikmu adalah jurnal ilustrasi yang hangat tentang kehidupan sederhana di kebun organik. Font mana yang paling tepat untuk judul sampulnya?" },
+  fresh:       { en: "Your comic is a light, sunny slice-of-life story about teenagers in summer. Which font fits the cover title best?", id: "Komikmu mengangkat kisah keseharian (slice-of-life) remaja yang ceria dan penuh semangat muda. Font mana yang paling tepat untuk judul sampulnya?" },
+  futuristic:  { en: "Your comic is a space adventure about a crew exploring distant planets. Which font fits the cover title best?", id: "Komikmu bertema penjelajahan antariksa melintasi galaksi masa depan. Font mana yang paling tepat untuk judul sampulnya?" },
+  funny:       { en: "Your comic is a silly gag comic that wants readers to laugh before they read a word. Which font fits the cover title best?", id: "Komikmu adalah komedi situasi yang ingin langsung memancing tawa pembaca sejak melihat sampulnya. Font mana yang paling tepat untuk judulnya?" },
+  rustic:      { en: "Your comic is a dusty Wild West tale of outlaws and sheriffs. Which font fits the cover title best?", id: "Komikmu berlatar padang gurun Wild West tentang duel para koboi dan sheriff. Font mana yang paling tepat untuk judul sampulnya?" },
+  brutalist:   { en: "Your comic is a raw, gritty street story with blunt, heavy energy. Which font fits the cover title best?", id: "Komikmu mengangkat kisah aksi jalanan yang keras, lugas, dan penuh benturan fisik. Font mana yang paling tepat untuk judul sampulnya?" },
+  traditional: { en: "Your comic is a classic literary adaptation of a nineteenth-century novel. Which font fits the cover title best?", id: "Komikmu merupakan adaptasi sastra klasik dari novel sejarah abad ke-19. Font mana yang paling tepat untuk judul sampulnya?" },
 };
 const FIT_STYLES = Object.keys(SCENARIOS);
 
 const SCENARIO_EXTRA = {
   en: "Before you decide: a title face grabs attention, but if it hurts legibility, readers will not get the title. Shrink your cover to thumbnail size and check that it still reads.",
-  id: "Sebelum memutuskan: font judul menarik perhatian, tetapi jika mengurangi keterbacaan, pembaca tidak akan menangkap judulnya. Kecilkan sampulmu ke ukuran thumbnail dan pastikan tetap terbaca.",
+  id: "Catatan penting: font judul memang bertugas memikat mata, tetapi jika keterbacaannya (legibility) buruk, pesan ceritamu tidak akan tersampaikan. Selalu uji sampulmu pada ukuran kecil (thumbnail).",
 };
 
 /* ---------- Anachronism scenarios ---------- */
@@ -257,20 +257,20 @@ const ANACH = {
   medieval: {
     out: ["futuristic", "scientific"], fit: ["medieval", "traditional", "rustic"],
     en: "Your comic is set in the Middle Ages, with knights and castles. Which font would feel out of place on the cover?",
-    id: "Komikmu berlatar Abad Pertengahan, dengan ksatria dan kastil. Font mana yang akan terasa tidak pada tempatnya di sampul?",
-    world: { en: "a medieval world", id: "dunia abad pertengahan" },
+    id: "Komikmu berlatar Abad Pertengahan dengan ksatria dan kastil. Font mana yang akan terasa janggal (anakronistis) bila dipasang pada sampul?",
+    world: { en: "a medieval world", id: "latar Abad Pertengahan" },
   },
   futuristic: {
     out: ["medieval", "rustic"], fit: ["futuristic", "scientific"],
     en: "Your comic is set in a high-tech space future. Which font would feel out of place on the cover?",
-    id: "Komikmu berlatar masa depan luar angkasa yang canggih. Font mana yang akan terasa tidak pada tempatnya di sampul?",
+    id: "Komikmu berlatar masa depan antariksa berteknologi tinggi. Font mana yang akan terasa janggal (anakronistis) bila dipasang pada sampul?",
     world: { en: "a high-tech future", id: "masa depan berteknologi tinggi" },
   },
   rustic: {
     out: ["futuristic", "scientific"], fit: ["rustic", "traditional"],
     en: "Your comic is set in the dusty Wild West. Which font would feel out of place on the cover?",
-    id: "Komikmu berlatar Wild West yang berdebu. Font mana yang akan terasa tidak pada tempatnya di sampul?",
-    world: { en: "the Wild West", id: "Wild West" },
+    id: "Komikmu berlatar era koboi Wild West yang berdebu. Font mana yang akan terasa janggal (anakronistis) bila dipasang pada sampul?",
+    world: { en: "the Wild West", id: "era Wild West" },
   },
 };
 
@@ -278,47 +278,47 @@ const ANACH = {
 const FX = {
   heavy: {
     en: { label: "Heavy weight", prompt: "Which version of the title feels stronger and louder?", why: "Thick strokes add visual mass, so the title feels powerful, loud and confident. Heavy weights are also easy to see from far away, which is great for covers.", cues: "thick strokes · small inner spaces · dense, dark colour on the page", summary: "Heavy weight feels strong and loud" },
-    id: { label: "Berat (tebal)", prompt: "Versi judul mana yang terasa lebih kuat dan lantang?", why: "Goresan tebal menambah massa visual, sehingga judul terasa kuat, lantang, dan percaya diri. Huruf tebal juga mudah terlihat dari jauh, bagus untuk sampul.", cues: "goresan tebal · ruang dalam huruf kecil · warna padat dan gelap di halaman", summary: "Huruf tebal terasa kuat dan lantang" },
+    id: { label: "Ketebalan tinggi (Heavy)", prompt: "Versi judul mana yang terasa lebih kuat dan lantang?", why: "Goresan tebal menambah bobot visual sehingga judul terasa kokoh, lantang, dan dominan. Ketebalan tinggi juga membuat judul tetap jelas terlihat dari kejauhan.", cues: "goresan tebal · ruang dalam huruf sempit · blok visual padat", summary: "Ketebalan tinggi (heavy) memberi kesan kuat dan lantang" },
   },
   thin: {
     en: { label: "Thin weight", prompt: "Which version of the title feels more delicate and quiet?", why: "Thin strokes take up little visual space, so the title feels quiet, elegant or fragile. On a busy cover or at thumbnail size, thin type can disappear.", cues: "hairline strokes · lots of white space · light colour on the page", summary: "Thin weight feels delicate and quiet" },
-    id: { label: "Tipis", prompt: "Versi judul mana yang terasa lebih halus dan tenang?", why: "Goresan tipis memakai sedikit ruang visual, sehingga judul terasa tenang, elegan, atau rapuh. Pada sampul yang ramai atau ukuran thumbnail, huruf tipis bisa hilang.", cues: "goresan setipis rambut · banyak ruang kosong · warna ringan di halaman", summary: "Huruf tipis terasa halus dan tenang" },
+    id: { label: "Ketebalan tipis (Thin)", prompt: "Versi judul mana yang terasa lebih halus dan hening?", why: "Goresan tipis menempati ruang visual yang ringan sehingga judul terasa anggun, tenang, atau rapuh. Namun hati-hati: di atas ilustrasi yang ramai, huruf tipis mudah tenggelam.", cues: "goresan tipis · ruang kosong luas · bobot visual ringan", summary: "Ketebalan tipis (thin) memberi kesan halus dan tenang" },
   },
   condensed: {
     en: { label: "Condensed (narrow)", prompt: "Which version feels more compressed, tall and urgent?", why: "Narrow letters feel squeezed and tall, like a crowd pressing in. They create tension and urgency, and they fit long titles into small spaces.", cues: "narrow letters · tall proportions · tight rhythm", summary: "Condensed letters feel tense and urgent" },
-    id: { label: "Condensed (sempit)", prompt: "Versi mana yang terasa lebih terhimpit, tinggi, dan mendesak?", why: "Huruf sempit terasa terhimpit dan tinggi, seperti kerumunan yang mendesak. Mereka menciptakan ketegangan dan rasa mendesak, serta memuat judul panjang di ruang kecil.", cues: "huruf sempit · proporsi tinggi · irama rapat", summary: "Huruf condensed terasa tegang dan mendesak" },
+    id: { label: "Proporsi sempit (Condensed)", prompt: "Versi mana yang terasa lebih padat, menjulang, dan mendesak?", why: "Huruf berproporsi sempit (condensed) terasa terhimpit secara horizontal dan menjulang tinggi. Proporsi ini menciptakan ketegangan dramatis sekaligus efektif memuat judul panjang.", cues: "proporsi huruf ramping · tampak menjulang vertikal · irama padat", summary: "Proporsi sempit (condensed) menciptakan kesan tegang dan mendesak" },
   },
   extended: {
     en: { label: "Extended (wide)", prompt: "Which version feels more open, steady and grounded?", why: "Wide letters feel stable and grounded, as if they have room to breathe. They read as calm, open or technological, but they take up more space.", cues: "wide letters · low, broad proportions · open rhythm", summary: "Extended letters feel open and steady" },
-    id: { label: "Extended (lebar)", prompt: "Versi mana yang terasa lebih terbuka, mantap, dan membumi?", why: "Huruf lebar terasa stabil dan membumi, seolah punya ruang untuk bernapas. Terbaca tenang, terbuka, atau teknologis, tetapi memakan lebih banyak ruang.", cues: "huruf lebar · proporsi rendah dan lebar · irama terbuka", summary: "Huruf extended terasa terbuka dan mantap" },
+    id: { label: "Proporsi melebar (Extended)", prompt: "Versi mana yang terasa lebih lapang, stabil, dan megah?", why: "Huruf berproporsi melebar (extended) berpijak secara luas dan stabil. Sangat efektif untuk membangun suasana sinematik, megah, atau futuristik.", cues: "proporsi huruf melebar · tampak stabil dan membentang · irama terbuka", summary: "Proporsi melebar (extended) memberi kesan lapang dan mantap" },
   },
   tight: {
     en: { label: "Tight letter spacing", prompt: "Which version feels more tense and intense?", why: "Tight tracking (little space between letters) makes letters feel crowded and compact: dense, tense, intense. Too tight and the letters collide, which hurts legibility.", cues: "letters almost touching · dark, dense word shape", summary: "Tight spacing feels dense and intense" },
-    id: { label: "Jarak huruf rapat", prompt: "Versi mana yang terasa lebih tegang dan intens?", why: "Tracking rapat (sedikit jarak antar huruf) membuat huruf terasa sesak dan padat: pekat, tegang, intens. Terlalu rapat dan huruf bertabrakan, merusak keterbacaan.", cues: "huruf hampir bersentuhan · bentuk kata gelap dan padat", summary: "Jarak rapat terasa pekat dan intens" },
+    id: { label: "Tracking rapat", prompt: "Versi mana yang terasa lebih padat dan intens?", why: "Tracking rapat (jarak antarhuruf yang sempit) menyatukan huruf menjadi blok yang padat dan penuh tekanan. Namun jika terlalu rapat hingga saling bertabrakan, keterbacaannya akan menurun.", cues: "antarhuruf nyaris bersentuhan · siluet kata padat dan menyatu", summary: "Tracking rapat memberi kesan padat dan intens" },
   },
   loose: {
     en: { label: "Loose letter spacing", prompt: "Which version feels calmer, airier and more cinematic?", why: "Loose tracking (extra space between letters) makes the title feel airy, calm and spacious. It often feels cinematic, premium or quiet. Too loose and the word falls apart into separate letters.", cues: "visible gaps between letters · light, open word shape · slower reading", summary: "Loose spacing feels airy and calm" },
-    id: { label: "Jarak huruf renggang", prompt: "Versi mana yang terasa lebih tenang, lapang, dan sinematik?", why: "Tracking renggang (jarak ekstra antar huruf) membuat judul terasa lapang, tenang, dan luas. Sering terasa sinematik, premium, atau hening. Terlalu renggang dan kata pecah menjadi huruf-huruf terpisah.", cues: "celah terlihat antar huruf · bentuk kata ringan dan terbuka · membaca lebih pelan", summary: "Jarak renggang terasa lapang dan tenang" },
+    id: { label: "Tracking renggang", prompt: "Versi mana yang terasa lebih tenang, lapang, dan sinematik?", why: "Tracking renggang memberi ruang bernapas di sela-sela huruf sehingga judul terasa elegan, hening, dan sinematik layaknya poster film. Namun jika terlalu renggang, kesatuan kata bisa terpecah.", cues: "jarak antarhuruf lega · komposisi terbuka · tempo baca lebih tenang", summary: "Tracking renggang memberi kesan lapang dan sinematik" },
   },
   even: {
     en: { label: "Well kerned", prompt: "Which version has more even, well-kerned spacing?", why: "Kerning is the space between one specific pair of letters. Letters like T, A, V and W have diagonal or open shapes that leave bigger gaps. Good kerning tucks these pairs closer so every gap looks equally wide. Uneven gaps look clumsy and make a title feel unfinished.", cues: "gaps that look equal · diagonal letters tucked together · no holes and no collisions", summary: "Even kerning looks polished" },
-    id: { label: "Kerning rapi", prompt: "Versi mana yang jaraknya lebih rata dan kerning-nya lebih rapi?", why: "Kerning adalah jarak antara satu pasangan huruf tertentu. Huruf seperti T, A, V, dan W berbentuk diagonal atau terbuka sehingga meninggalkan celah lebih besar. Kerning yang baik merapatkan pasangan ini agar semua celah tampak sama lebar. Celah tak rata terlihat canggung dan membuat judul terasa belum selesai.", cues: "celah tampak sama lebar · huruf diagonal dirapatkan · tanpa lubang dan tanpa tabrakan", summary: "Kerning rata terlihat rapi" },
+    id: { label: "Kerning optis yang seimbang", prompt: "Versi mana yang memiliki kerapatan antarhuruf (kerning) paling seimbang?", why: "Kerning adalah pengaturan jarak khusus di antara pasangan huruf tertentu. Huruf berbidang miring atau terbuka seperti T, A, V, dan W sering menyisakan celah kosong yang tampak bolong. Kerning yang baik menyeimbangkan celah tersebut secara optis agar ritme kata terlihat utuh dan profesional.", cues: "volume celah antarhuruf tampak seragam · pasangan huruf diagonal dirapatkan secara optis · tidak tampak bolong", summary: "Kerning yang seimbang membuat judul tampak rapi dan profesional" },
   },
   uneven: {
     en: { label: "Uneven gaps", summary: "Uneven gaps look clumsy" },
-    id: { label: "Celah tak rata", summary: "Celah tak rata terlihat canggung" },
+    id: { label: "Celah antarhuruf timpang", summary: "Celah antarhuruf yang timpang membuat judul tampak belum matang" },
   },
   slant: {
     en: { label: "Forward slant", prompt: "Which version feels faster and more energetic?", why: "A forward slant (leaning right, in the direction we read) makes letters look like they are leaning into motion. It adds speed, energy and momentum, which suits action comics.", cues: "letters leaning right · diagonal energy · feels like movement", summary: "Forward slant feels fast and energetic" },
-    id: { label: "Miring ke depan", prompt: "Versi mana yang terasa lebih cepat dan berenergi?", why: "Kemiringan ke depan (condong ke kanan, searah membaca) membuat huruf tampak bersandar ke arah gerak. Menambah kecepatan, energi, dan momentum, cocok untuk komik aksi.", cues: "huruf condong ke kanan · energi diagonal · terasa bergerak", summary: "Miring ke depan terasa cepat dan berenergi" },
+    id: { label: "Condong ke depan (Forward slant)", prompt: "Versi mana yang terasa lebih cepat dan penuh akselerasi?", why: "Kemiringan ke kanan (searah gerak mata membaca) membuat huruf tampak sedang melaju. Efek ini langsung menyuntikkan kecepatan, aksi, dan momentum pada judul komik.", cues: "batang huruf condong ke kanan · garis energi diagonal · kesan melesat", summary: "Kemiringan ke depan memberi kesan cepat dan bertenaga" },
   },
   tilt: {
     en: { label: "Tilted title", prompt: "Which version feels more playful and casual?", why: "Tilting the whole title makes it feel casual, lively and a little unstable, as if it was placed by hand. About 5–10° looks intentional; only 1–2° tends to look like a mistake.", cues: "title on a diagonal · baseline rising or falling · casual, lively feel", summary: "A tilted title feels playful and casual" },
-    id: { label: "Judul dimiringkan", prompt: "Versi mana yang terasa lebih ceria dan santai?", why: "Memiringkan seluruh judul membuatnya terasa santai, hidup, dan sedikit tidak stabil, seolah ditempatkan dengan tangan. Sekitar 5–10° terlihat disengaja; hanya 1–2° cenderung terlihat seperti kesalahan.", cues: "judul miring diagonal · garis dasar naik atau turun · kesan santai dan hidup", summary: "Judul miring terasa ceria dan santai" },
+    id: { label: "Rotasi diagonal", prompt: "Versi mana yang terasa lebih dinamis dan ekspresif?", why: "Memutar seluruh garis dasar (baseline) judul secara diagonal menciptakan kesan dinamis dan spontan. Gunakan sudut sekitar 5–10° agar tampak disengaja; kemiringan tanggung 1–2° justru terlihat seperti salah pasang.", cues: "seluruh judul berotasi diagonal · garis dasar menanjak · kesan spontan dan hidup", summary: "Rotasi diagonal membuat judul terasa dinamis dan ekspresif" },
   },
   upright: {
     en: { label: "Upright and level", prompt: "Which version feels steadier, calmer and more formal?", why: "Letters standing straight on a level baseline feel steady, calm and formal, like a building. That is a safe choice for serious or classic stories.", cues: "vertical letters · level baseline · stable, orderly feel", summary: "Upright, level type feels steady and formal" },
-    id: { label: "Tegak dan lurus", prompt: "Versi mana yang terasa lebih mantap, tenang, dan formal?", why: "Huruf yang berdiri tegak pada garis dasar yang lurus terasa mantap, tenang, dan formal, seperti bangunan. Pilihan aman untuk cerita yang serius atau klasik.", cues: "huruf tegak · garis dasar lurus · kesan stabil dan teratur", summary: "Huruf tegak dan lurus terasa mantap dan formal" },
+    id: { label: "Tegak dan mendatar (Upright)", prompt: "Versi mana yang terasa lebih stabil, tenang, dan formal?", why: "Huruf yang berdiri tegak lurus di atas garis dasar mendatar memberikan kesan kokoh, teratur, dan berwibawa layaknya pilar arsitektur.", cues: "batang huruf vertikal · garis dasar mendatar · komposisi stabil", summary: "Orientasi tegak lurus memberi kesan stabil dan berwibawa" },
   },
 };
 const FX_CSS = {
@@ -344,25 +344,25 @@ const ROLE_TEXT = {
     extra: "For your comic: use a text-friendly font (or clear comic lettering) for speech balloons and captions, and save display or decorative faces for the title.",
   },
   id: {
-    prompt: "Font mana di bawah ini yang merupakan text face, dibuat untuk membaca panjang dengan nyaman?",
-    why: "Text face dirancang untuk bacaan panjang, seperti di buku dan majalah. Fokusnya keterbacaan, sehingga kamu bisa membaca cepat dalam waktu lama tanpa lelah. Display face dibuat untuk judul besar, dan decorative face dibuat untuk menarik perhatian, bahkan dengan mengorbankan keterbacaan.",
-    cues: "bentuk huruf konvensional · jarak lega · x-height tinggi · bentuk tenang dan rata",
-    extra: "Untuk komikmu: pakai font yang ramah baca (atau lettering komik yang jelas) untuk balon kata dan keterangan, dan simpan display atau decorative face untuk judul.",
+    prompt: "Manakah dari font berikut yang tergolong text face (font teks untuk kenyamanan bacaan panjang)?",
+    why: "Text face dirancang khusus untuk paragraf panjang seperti isi buku atau dialog, dengan mengutamakan kenyamanan baca (readability) agar mata tidak cepat lelah. Sebaliknya, display face dan decorative face dirancang untuk menarik perhatian pada ukuran besar sebagai judul.",
+    cues: "bentuk huruf konvensional · spasi yang lega · x-height proporsional · irama bentuk yang tenang",
+    extra: "Tips komik: gunakan font teks yang bersih untuk balon dialog dan narasi, lalu simpan display face atau decorative face untuk logo judul utama.",
   },
 };
 
 /* ---------- General tips shown in the notes ---------- */
 const TIPS = [
-  { en: "A font speaks before the words do: we feel its mood before we read a single word.", id: "Font berbicara sebelum kata-katanya: kita merasakan suasananya sebelum membaca satu kata pun." },
-  { en: "Personality comes from shapes: stroke thickness, roundness, width, slant and small details.", id: "Kepribadian berasal dari bentuk: ketebalan goresan, kebulatan, lebar, kemiringan, dan detail kecil." },
-  { en: "Round shapes tend to feel friendly; sharp angles tend to feel serious or even dangerous.", id: "Bentuk bulat cenderung terasa ramah; sudut tajam cenderung terasa serius atau bahkan berbahaya." },
-  { en: "Look for typefaces that embody the qualities of the message you want to convey.", id: "Carilah font yang mewujudkan kualitas pesan yang ingin kamu sampaikan." },
-  { en: "One font can carry several moods at once, for example both friendly and young.", id: "Satu font bisa membawa beberapa suasana sekaligus, misalnya ramah sekaligus muda." },
-  { en: "Mood is a blend: the look of the font, how readable your design is, and what the words mean.", id: "Suasana adalah perpaduan: tampilan font, keterbacaan desainmu, dan makna kata-katanya." },
-  { en: "Culture and context shape these feelings too. They are common associations, not strict rules.", id: "Budaya dan konteks juga membentuk perasaan ini. Ini asosiasi yang umum, bukan aturan mutlak." },
-  { en: "Legibility comes first: if readers cannot read the title, its mood does not matter.", id: "Keterbacaan nomor satu: jika pembaca tidak bisa membaca judulnya, suasananya tidak penting." },
-  { en: "A limited palette looks confident: one or two fonts are usually enough for a cover.", id: "Palet terbatas terlihat percaya diri: satu atau dua font biasanya cukup untuk sebuah sampul." },
-  { en: "Typography is about eyeballing: step back, squint, and trust what you see.", id: "Tipografi itu soal mata: mundur sedikit, sipitkan mata, dan percayai apa yang kamu lihat." },
+  { en: "A font speaks before the words do: we feel its mood before we read a single word.", id: "Rupa huruf berbicara sebelum kata-katanya dibaca: mata kita menangkap suasananya terlebih dahulu." },
+  { en: "Personality comes from shapes: stroke thickness, roundness, width, slant and small details.", id: "Karakter huruf lahir dari anatominya: ketebalan goresan, kelengkungan sudut, proporsi lebar, hingga kemiringannya." },
+  { en: "Round shapes tend to feel friendly; sharp angles tend to feel serious or even dangerous.", id: "Bentuk membulat cenderung memberi kesan ramah, sedangkan sudut lancip memancarkan ketegangan atau bahaya." },
+  { en: "Look for typefaces that embody the qualities of the message you want to convey.", id: "Pilihlah rupa huruf (typeface) yang paling mewakili jiwa dan pesan ceritamu." },
+  { en: "One font can carry several moods at once, for example both friendly and young.", id: "Satu jenis huruf dapat memancarkan beberapa nuansa sekaligus—misalnya terasa ramah sekaligus berjiwa muda." },
+  { en: "Mood is a blend: the look of the font, how readable your design is, and what the words mean.", id: "Suasana (mood) adalah perpaduan antara estetika huruf, tingkat keterbacaan desainmu, dan makna kata itu sendiri." },
+  { en: "Culture and context shape these feelings too. They are common associations, not strict rules.", id: "Konteks budaya turut membentuk persepsi visual. Prinsip-prinsip ini adalah panduan kepekaan, bukan aturan kaku." },
+  { en: "Legibility comes first: if readers cannot read the title, its mood does not matter.", id: "Keterbacaan (legibility) tetap utama: seindah apa pun hurufnya, pesan gagal jika pembaca kesulitan mengeja judulmu." },
+  { en: "A limited palette looks confident: one or two fonts are usually enough for a cover.", id: "Kombinasi font yang hemat tampak lebih matang: cukup satu font ekspresif untuk judul dan satu font bersih untuk teks pendukung." },
+  { en: "Typography is about eyeballing: step back, squint, and trust what you see.", id: "Tipografi mengandalkan kepekaan optis: mundur sejenak, sipitkan mata (squint test), dan amati keseimbangan visualnya." },
 ];
 
 /* ---------- Helpers ---------- */
