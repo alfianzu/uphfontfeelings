@@ -677,8 +677,8 @@ const GENRES = {
 
 const EYE_TRACK_FLOW = {
   name: {
-    en: "Art-First Reading Flow",
-    id: "Alur Baca Berpusat pada Ilustrasi (Art-First)"
+    en: "Reading Flow",
+    id: "Alur Baca Berpusat pada Ilustrasi"
   },
   subtitle: {
     en: "1. Illustration → 2. Title → 3. Story Tagline → 4. Issue Number → 5. Creator Byline → 6. Mandatories (Logo & Barcode)",
@@ -779,7 +779,7 @@ function titleInput(L, onChange) {
   return h("label", { class: "ctrl title-ctrl" }, h("span", { class: "ctrl-label" }, bi(L, "Try your own comic title", "Coba judul komikmu sendiri")), input);
 }
 
-/** Shared helper to build a real comic cover example card */
+/** Shared helper to build a cover example card */
 function makeCoverCard({ badge, badgeColor, title, coverSrc, alt, swatches, text, note }) {
   return h("div", { class: "color-cover-card" },
     h("div", { class: "color-cover-img-wrap" },
@@ -874,10 +874,10 @@ function lessonVoice(L) {
       "Pada sampul komik, judul adalah elemen pertama yang menyapa pembaca. Tampilan hurufnya harus mencerminkan suasana ceritamu. Kata yang sama, enam nuansa cerita yang berbeda:")),
     titleInput(L, (v) => samples.forEach((s) => (s.textContent = v))),
     h("div", { class: "fgrid" }, cards),
-    h("h3", null, bi(L, "Type voices on real comic covers", "Suara tipografi pada sampul komik nyata")),
+    h("h3", null, bi(L, "Type voices on covers", "Suara tipografi pada sampul")),
     para(bi(L,
-      "Compare how these three real comic covers use completely different typographic voices to announce their genre at a single glance:",
-      "Bandingkan bagaimana ketiga sampul komik ini menggunakan karakter suara tipografi yang sangat berbeda untuk menyampaikan genrenya dalam sekali pandang:")),
+      "Compare how these three covers use completely different typographic voices to announce their genre at a single glance:",
+      "Bandingkan bagaimana ketiga sampul ini menggunakan karakter suara tipografi yang sangat berbeda untuk menyampaikan genrenya dalam sekali pandang:")),
     h("div", { class: "color-cover-grid cols-3" }, voiceCoverExamples)
   );
 }
@@ -964,7 +964,7 @@ function lessonCharacter(L) {
       bi(L,
         "A title's mood comes from the look of the typeface, plus how readable your design is, plus what the words themselves mean. These feelings are common tendencies, not strict rules: cultures differ and one font can carry several moods.",
         "Suasana sebuah judul lahir dari perpaduan estetika huruf, tingkat keterbacaan desainmu, serta makna kata itu sendiri. Kesan ini bersifat kecenderungan visual, bukan aturan kaku: konteks budaya bisa berbeda dan satu huruf dapat membawakan beberapa nuansa sekaligus.")),
-    h("h3", null, bi(L, "Character & style on real comic covers", "Karakter & gaya pada sampul komik nyata")),
+    h("h3", null, bi(L, "Character & style on covers", "Karakter & gaya pada sampul")),
     para(bi(L,
       "See how professional comic covers combine character poles (hard/soft, fast/slow, old/young) with historical or cultural styles:",
       "Lihat bagaimana sampul komik profesional memadukan kutub karakter (keras/lembut, cepat/lambat, kuno/muda) dengan gaya zaman atau budaya tertentu:")),
@@ -1060,10 +1060,10 @@ function lessonRoles(L) {
     ]),
     h("h3", null, bi(L, "The thumbnail test", "Uji ukuran kecil (Thumbnail Test)")),
     h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, h("div", null, a), h("div", null, b)), h("div", { class: "demo-ctrls" }, s.row, cap)),
-    h("h3", null, bi(L, "Display, Decorative & Text roles on real covers", "Peran Display, Decorative & Text pada sampul nyata")),
+    h("h3", null, bi(L, "Display, Decorative & Text roles on covers", "Peran Display, Decorative & Text pada sampul")),
     para(bi(L,
-      "Here is how real comic covers balance bold display faces, custom decorative logos, and clean supporting text:",
-      "Berikut cara sampul komik profesional menyeimbangkan huruf display yang tegas, logo dekoratif kustom, dan teks pendukung yang bersih:")),
+      "Here is how covers balance bold display faces, custom decorative logos, and clean supporting text:",
+      "Berikut cara sampul menyeimbangkan huruf display yang tegas, logo dekoratif kustom, dan teks pendukung yang bersih:")),
     h("div", { class: "color-cover-grid cols-3" }, roleCovers)
   );
 }
@@ -1264,7 +1264,7 @@ function lessonMatch(L) {
       bi(L,
         "Before the reader has even read page one or understood the story, the typeface's mood has already told them whether to laugh, tense up, or look over their shoulder.",
         "Bahkan sebelum pembaca membuka halaman pertama, suasana rupa huruf pada sampul sudah memberi sinyal apakah mereka akan tertawa, menahan napas tegang, atau merinding.")),
-    h("h3", null, bi(L, "Real comic covers: Matching font to character", "Sampul komik nyata: Menyelaraskan huruf dengan tokoh")),
+    h("h3", null, bi(L, "Covers: Matching font to character", "Sampul: Menyelaraskan huruf dengan tokoh")),
     para(bi(L,
       "Look at how these three covers translate their main character's personality directly into the shape of the title logo:",
       "Perhatikan bagaimana ketiga sampul ini menerjemahkan kepribadian tokoh utamanya langsung ke dalam bentuk anatomi logo judul:")),
@@ -1398,7 +1398,7 @@ function lessonHabits(L) {
     tierContainer.innerHTML = "";
     const tierHead = h("div", { class: "tier-unified-head" },
       h("h4", { class: "tier-unified-title" }, bi(L, "6 Tiers of Reading Flow", "6 Tingkatan Alur Baca")),
-      h("span", { class: "tier-unified-badge" }, bi(L, "Art-First Hierarchy", "Hierarki Art-First"))
+      h("span", { class: "tier-unified-badge" }, bi(L, "Cover Hierarchy", "Hierarki Sampul"))
     );
     const tierList = h("div", { class: "tier-unified-list" });
     const tierData = buildTierDescriptions(title, font, gInfo, tagline, issueNum, creatorName);
@@ -1527,7 +1527,7 @@ function lessonHabits(L) {
 
   const habitCovers = [
     makeCoverCard({
-      badge: bi(L, "Art-First Reading Flow", "Alur Baca Art-First"),
+      badge: bi(L, "Reading Flow", "Alur Baca"),
       badgeColor: "#334155",
       title: bi(L, "Gundala: Son of Lightning #1", "Gundala: Putra Petir #1"),
       coverSrc: "covers/cover_GUNDALA_SON_OF_LIGHTNING_1.jpg",
@@ -1557,7 +1557,7 @@ function lessonHabits(L) {
       )
     }),
     makeCoverCard({
-      badge: bi(L, "Art-First Centerpiece", "Pusat Aksi Art-First"),
+      badge: bi(L, "Centerpiece", "Pusat Aksi"),
       badgeColor: "#3f3f46",
       title: bi(L, "Lost Fantasy #12", "Lost Fantasy #12"),
       coverSrc: "covers/large-1588852.jpg",
@@ -1574,7 +1574,7 @@ function lessonHabits(L) {
   ];
 
   return h("div", null,
-    h("h3", null, bi(L, "Cover Hierarchy: Art-First Reading Flow", "Hierarki Sampul: Alur Baca Berpusat pada Ilustrasi (Art-First)")),
+    h("h3", null, bi(L, "Cover Hierarchy: Reading Flow", "Hierarki Sampul: Alur Baca Berpusat pada Ilustrasi")),
     para(bi(L,
       "In comic cover design, the artwork is the primary emotional hook. Guide the reader's eye smoothly across six distinct tiers of information:",
       "Dalam desain sampul komik, ilustrasi adalah penarik emosi utama. Arahkan gerak mata pembaca secara alami melewati enam tingkatan (tier) informasi:")),
@@ -1586,7 +1586,7 @@ function lessonHabits(L) {
     ),
     h("div", { class: "flow-switch-panel" },
       h("div", { class: "flow-switch-top" },
-        h("span", { class: "small-label" }, bi(L, "Art-First Flow: 1. Illustration → 2. Title → 3. Tagline → 4. Issue # → 5. Byline → 6. Mandatories", "Alur Art-First: 1. Ilustrasi → 2. Judul → 3. Tagline → 4. Nomor Edisi → 5. Kreator → 6. Mandatori")),
+        h("span", { class: "small-label" }, bi(L, "Reading Flow: 1. Illustration → 2. Title → 3. Tagline → 4. Issue # → 5. Byline → 6. Mandatories", "Alur Baca: 1. Ilustrasi → 2. Judul → 3. Tagline → 4. Nomor Edisi → 5. Kreator → 6. Mandatori")),
         eyeToggleBtn
       )
     ),
@@ -1599,10 +1599,10 @@ function lessonHabits(L) {
       bi(L, "Avoid anachronisms: A blackletter title on a futuristic mech story, or a space font on a Western, pulls readers right out of the comic.", "Hindari anakronisme: Judul bergaya gotik abad pertengahan untuk cerita robot masa depan, atau huruf fiksi ilmiah untuk tema koboi, akan merusak imersi pembaca."),
       bi(L, "Avoid trite correlations: Look at what others have done. If every comedy uses the exact same goofy font, look for fresher ways to be playful.", "Hindari pilihan yang klise: Amati karya yang sudah ada. Jika semua komik komedi memakai rupa huruf konyol yang sama, carilah pendekatan visual yang lebih segar."),
     ]),
-    h("h3", null, bi(L, "The Art-First Hierarchy on Real Comic Covers", "Hierarki Art-First pada Sampul Komik Nyata")),
+    h("h3", null, bi(L, "Hierarchy on Covers", "Hierarki pada Sampul")),
     para(bi(L,
-      "Notice how the centerpiece artwork commands attention first and guides the reader's gaze across these three published comic covers:",
-      "Perhatikan bagaimana ilustrasi utama menjadi pemikat pertama yang mengarahkan pandangan pembaca pada ketiga sampul komik nyata berikut:")),
+      "Notice how the centerpiece artwork commands attention first and guides the reader's gaze across these three published covers:",
+      "Perhatikan bagaimana ilustrasi utama menjadi pemikat pertama yang mengarahkan pandangan pembaca pada ketiga sampul berikut:")),
     h("div", { class: "color-cover-grid cols-3" }, habitCovers),
   );
 }
@@ -1805,7 +1805,7 @@ function lessonColor(L) {
     harmonyBtns.append(btn);
   });
 
-  /* ---- Aspect 1 Cards: Color Wheel Harmonies on Real Covers ---- */
+  /* ---- Aspect 1 Cards: Color Wheel Harmonies on Covers ---- */
   const harmonyCards = [
     {
       key: "analogous",
@@ -2001,7 +2001,7 @@ function lessonColor(L) {
     })
   ];
 
-  /* ---- Aspect 4: Interactive 60:30:10 Proportion Lab + Real Cover Breakdowns ---- */
+  /* ---- Aspect 4: Interactive 60:30:10 Proportion Lab + Cover Breakdowns ---- */
   const RATIO_MODES = {
     balanced: {
       label: { en: "✓ Balanced 60 : 30 : 10 (Ideal)", id: "✓ Seimbang 60 : 30 : 10 (Ideal)" },
@@ -2111,7 +2111,7 @@ function lessonColor(L) {
 
   renderRatioLab();
 
-  /* Real Cover 60:30:10 Breakdowns */
+  /* Cover 60:30:10 Breakdowns */
   const makeRatioCard = ({ title, coverSrc, c60, c30, c10 }) => {
     return h("div", { class: "ratio-cover-card" },
       h("div", { class: "color-cover-img-wrap" },
@@ -2279,7 +2279,7 @@ function lessonColor(L) {
       )
     ),
 
-    h("h4", { class: "subhead-cover-examples" }, bi(L, "60:30:10 Breakdown on Real Comic Covers", "Bedah Proporsi 60:30:10 pada Sampul Komik Nyata")),
+    h("h4", { class: "subhead-cover-examples" }, bi(L, "60:30:10 Breakdown on Covers", "Bedah Proporsi 60:30:10 pada Sampul")),
     h("div", { class: "color-cover-grid cols-3" }, ratioBreakdowns)
   );
 }
@@ -2362,7 +2362,7 @@ function lessonWeightWidth(L) {
       bi(L, "Thin titles can vanish on busy artwork. Heavy ones stay visible from far away.", "Huruf yang terlalu tipis mudah tenggelam di atas ilustrasi yang ramai, sedangkan huruf tebal tetap terbaca jelas dari jauh."),
       bi(L, "Condensed letters help a long title fit; extended letters suit calm or high-tech stories.", "Huruf sempit (condensed) membantu judul panjang muat dengan rapi; huruf melebar (extended) memberi kesan tenang, megah, atau futuristis."),
     ]),
-    h("h3", null, bi(L, "Weight & width on real comic covers", "Ketebalan & lebar huruf pada sampul komik nyata")),
+    h("h3", null, bi(L, "Weight & width on covers", "Ketebalan & lebar huruf pada sampul")),
     para(bi(L,
       "See how published covers use heavy condensed blocks versus wide extended letterforms to control energy and space:",
       "Lihat bagaimana sampul komik profesional memanfaatkan huruf tebal-sempit (condensed) maupun huruf melebar (extended) untuk mengendalikan ketegangan dan ruang:")),
@@ -2495,7 +2495,7 @@ function lessonSpacing(L) {
         "Jarak yang rapat memberi kesan padat, tegang, dan mendesak. Jarak yang renggang memberi kesan tenang, lapang, dan sinematik. Sebaliknya, kerning yang tidak rata membuat judul tampak canggung dan belum matang.")),
     h("h3", null, "Leading"),
     h("div", { class: "demo demo-split" }, h("div", { class: "demo-stage" }, leadBox), h("div", { class: "demo-ctrls" }, ld.row, leadCap)),
-    h("h3", null, bi(L, "Tracking, kerning & leading on real comic covers", "Tracking, kerning & leading pada sampul komik nyata")),
+    h("h3", null, bi(L, "Tracking, kerning & leading on covers", "Tracking, kerning & leading pada sampul")),
     para(bi(L,
       "Compare how loose tracking, careful diagonal kerning, and tight stacked leading shape the mood of these three covers:",
       "Bandingkan bagaimana tracking renggang, kerning diagonal yang presisi, serta leading rapat bertumpuk membentuk karakter visual pada ketiga sampul ini:")),
@@ -2595,7 +2595,7 @@ function lessonOrientation(L) {
       bi(L, "A real italic is redrawn by the type designer. Slanting a normal font just by skewing it distorts the strokes: fine for a bold display title, but check it with your eyes.", "Huruf italic asli digambar khusus oleh perancang huruf. Memiringkan huruf tegak secara paksa (skew/oblique) dapat mengubah proporsi goresannya—masih aman untuk judul tebal, tetapi selalu periksa hasilnya secara visual."),
       bi(L, "Whatever you do, keep the title readable.", "Seberapa ekspresif pun rotasi dan ayunan hurufnya, pastikan judul utama tetap mudah dibaca."),
     ]),
-    h("h3", null, bi(L, "Slant, rotation & bounce on real comic covers", "Kemiringan, rotasi diagonal & ayunan huruf pada sampul nyata")),
+    h("h3", null, bi(L, "Slant, rotation & bounce on covers", "Kemiringan, rotasi diagonal & ayunan huruf pada sampul")),
     para(bi(L,
       "Notice how these action covers use forward slant, upward diagonal rotation, and letter-by-letter bounce to bring their titles to life:",
       "Perhatikan bagaimana sampul-sampul komik ini menerapkan kemiringan ke depan, rotasi diagonal menanjak, serta ayunan huruf untuk menghidupkan judulnya:")),
@@ -2623,8 +2623,8 @@ function lessonChecklist(L) {
       "Selaraskan Huruf dengan Tokoh: Periksa tiga pilar utama—Tujuan Perancangan (Design Intent), Estetika Visual (Aesthetics), dan Suasana Cerita (Mood)."
     ),
     bi(L,
-      "Cover Hierarchy & Eye-Tracking: Guide the reader's gaze through the Art-First flow (1. Illustration → 2. Title → 3. Tagline → 4. Issue # → 5. Byline → 6. Mandatories) while respecting negative space.",
-      "Hierarki Sampul & Alur Baca: Arahkan gerak mata pembaca melalui alur Art-First (1. Ilustrasi → 2. Judul → 3. Tagline → 4. Nomor Edisi → 5. Kreator → 6. Mandatori/Logo) dengan menghormati ruang kosong."
+      "Cover Hierarchy & Eye-Tracking: Guide the reader's gaze through the reading flow (1. Illustration → 2. Title → 3. Tagline → 4. Issue # → 5. Byline → 6. Mandatories) while respecting negative space.",
+      "Hierarki Sampul & Alur Baca: Arahkan gerak mata pembaca melalui alur baca (1. Ilustrasi → 2. Judul → 3. Tagline → 4. Nomor Edisi → 5. Kreator → 6. Mandatori/Logo) dengan menghormati ruang kosong."
     ),
     bi(L,
       "Weight & Width: Match stroke thickness (thin vs. heavy) to your hero's energy, and use width (condensed vs. extended) to control tension, scale, and space.",
@@ -2693,8 +2693,8 @@ function lessonChecklist(L) {
     quote(bi(L, "Typography exists to honor the content.", "Tipografi hadir untuk memuliakan isi pesan."), "Robert Bringhurst"),
     h("p", null,
       bi(L,
-        "Here is the essence of all nine lessons in one complete checklist. The quiz that follows tests these ideas with real comic cover scenarios. ",
-        "Berikut adalah intisari dari kesembilan pelajaran dalam satu daftar periksa utuh. Kuis setelah halaman ini akan menguji kepekaan desainmu lewat berbagai skenario sampul komik. "
+        "Here is the essence of all nine lessons in one complete checklist. The quiz that follows tests these ideas with cover scenarios. ",
+        "Berikut adalah intisari dari kesembilan pelajaran dalam satu daftar periksa utuh. Kuis setelah halaman ini akan menguji kepekaan desainmu lewat berbagai skenario sampul. "
       ),
       h("em", null, bi(L, "Take your time: every answer comes with a short design note.", "Santai saja: setiap jawaban dilengkapi ulasan singkat."))
     ),
@@ -2702,7 +2702,7 @@ function lessonChecklist(L) {
       h("ol", { class: "checklist-col" }, rules.slice(0, 5).map((r) => h("li", null, r))),
       h("ol", { class: "checklist-col", start: 6 }, rules.slice(5).map((r) => h("li", null, r)))
     ),
-    h("h3", null, bi(L, "Putting it all together on real covers", "Memadukan seluruh prinsip pada sampul nyata")),
+    h("h3", null, bi(L, "Putting it all together on covers", "Memadukan seluruh prinsip pada sampul")),
     para(bi(L,
       "Before starting the quiz, look at how these three covers bring typography, hierarchy, spacing, orientation, and color together into one unforgettable design:",
       "Sebelum memulai kuis, amati bagaimana ketiga sampul ini menyatukan karakter huruf, hierarki alur baca, pengaturan ruang, dan proporsi warna menjadi satu kesatuan desain yang ikonik:")),
